@@ -9,7 +9,9 @@
         padding: 0;
         margin: 0;
     }
-    
+    body, * {
+          caret-color: transparent; /* Hides text cursor */
+    }
     .container-fluid {
         padding: 0;
         margin: 0;
