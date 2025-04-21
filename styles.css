@@ -1,17 +1,13 @@
-* {
-        padding: 0;
-        margin: 0;
-        box-sizing: border-box;
-        font-family: 'Poppins', sans-serif;
-    }
-    
-    body {
-        padding: 0;
-        margin: 0;
-    }
-    body, * {
-          caret-color: transparent; /* Hides text cursor */
-    }
+*,
+*::before,
+*::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    caret-color: transparent;
+}
+
     .container-fluid {
         padding: 0;
         margin: 0;
