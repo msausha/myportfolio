@@ -336,7 +336,7 @@ const jobExperiences = [
     {
         title: "Software Support Engineer L3",
         company: "NCR Corporation",
-        duration: "December 2022 - August 2024",
+        duration: "December 2022 - June 2024",
         details: [
             "Led technical support for the Retalix (R10) application, ensuring robust system performance.",
             "Designed and implemented system processes using Azure and PowerShell scripting.",
@@ -732,9 +732,7 @@ function showContact() {
         { type: "📧 Email", value: "shakilmsa@yahoo.com" },
         { type: "📞 Phone", value: "+61 406 001 444" },
         { type: "🌍 Website", value: "https://msausha.github.io/myportfolio" },
-        { type: "📍 Location", value: "Melbourne, Australia" },
-        // { type: "💼 LinkedIn", value: "<a href='https://linkedin.com/in/yourprofile' target='_blank'>LinkedIn Profile</a>" },
-        // { type: "🐦 Twitter", value: "<a href='https://twitter.com/yourhandle' target='_blank'>@yourhandle</a>" }
+        { type: "📍 Location", value: "Melbourne, Australia" }
     ];
 
 
