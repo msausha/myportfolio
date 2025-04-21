@@ -37,25 +37,51 @@
                                 case 'contact':
                                         showContact();
                                 break;
-                                case 'skills':
-                                contentDiv.innerHTML = '<h1>My Skills</h1><p>You are in Skills Section</p>';
-                                break;
+
 
                                 case 'trainings':
-                                contentDiv.innerHTML = '<h1>My Trainings</h1><p>You are in Trainings Section</p>';
-                                break;
-
-                                case 'certifications':
-                                contentDiv.innerHTML = '<h1>My Certifications</h1><p>You are in Certifications Section</p>';
-                                break;
-
+                                    contentDiv.innerHTML = `
+                                        <h1>My Trainings</h1>
+                                        <div class="trainings-grid">
+                                            <div class="training-item">Azure Fundamentals</div>
+                                            <div class="training-item">Office 365 Admin</div>
+                                            <div class="training-item">PowerShell Automation</div>
+                                            <div class="training-item">ITIL Foundations</div>
+                                            <div class="training-item">Windows Server Administration</div>
+                                            <div class="training-item">Linux for Admins</div>
+                                            <div class="training-item">Cybersecurity Essentials</div>
+                                            <div class="training-item">Monitoring & Incident Response</div>
+                                        </div>`;
+                                    break;
+                            
                                 case 'community':
-                                contentDiv.innerHTML = '<h1>My Community</h1><p>You are in Community Section</p>';
-                                break;
-
-                                case 'socialactivities':
-                                contentDiv.innerHTML = '<h1>My Social Activities</h1><p>You are in Social Activities Section</p>';
-                                break;
+                                    contentDiv.innerHTML = `
+                                        <h1>My Community Involvement</h1>
+                                        <ul>
+                                            <li>Mentored junior engineers in PowerShell and troubleshooting techniques.</li>
+                                            <li>Participated in design/code review sessions in cross-functional teams.</li>
+                                            <li>Shared knowledge through collaborative issue-solving and tech strategy discussions.</li>
+                                        </ul>`;
+                                    break;
+                            
+                                case 'certifications':
+                                    contentDiv.innerHTML = `
+                                        <h1>My Certifications</h1>
+                                        <div class="certifications-container">
+                                            <div class="cert-card">
+                                                <h3>CCNA</h3>
+                                                <p>Cisco Certified Network Associate</p>
+                                            </div>
+                                            <div class="cert-card">
+                                                <h3>JNCIA</h3>
+                                                <p>Juniper Networks Certified Associate</p>
+                                            </div>
+                                            <div class="cert-card">
+                                                <h3>ITIL v3 Foundation</h3>
+                                                <p>IT Service Management Best Practices</p>
+                                            </div>
+                                        </div>`;
+                                    break;
 
                                 default:
                                 contentDiv.innerHTML = '<h1>Welcome</h1><p>Choose a Section from the menu.</p>';
@@ -214,9 +240,7 @@ function loadDefaultAnimation()
 {
         grid2.innerHTML = ''
 
-
-
-        for (let n = 0; n < mySkills.length; n++) {
+    for (let n = 0; n < mySkills.length; n++) {
     var card = document.createElement('div');
     card.setAttribute('class', 'col-12 col-md-6 col-lg-6 mb-3 card');
     card.textContent = mySkills[n];
@@ -231,8 +255,6 @@ function loadDefaultAnimation()
     grid2.appendChild(card);
 }
 
-
-
         // anime({
         //     targets: '.card',
         //     translateY: [30, 0],
@@ -245,7 +267,6 @@ function loadDefaultAnimation()
 loadDefaultAnimation()
 
         grid3.style.display = 'none'
-
 
 const shakilAhmedSkills = [
   "Expert in designing and optimizing scalable IT infrastructures",
@@ -295,7 +316,6 @@ const shakilAhmedSkills = [
 
     defaultViewInHome()
     
-
     document.querySelectorAll("#grid1 .nav-link").forEach(link => {
 
                 link.addEventListener("click", function() {
@@ -311,7 +331,6 @@ const shakilAhmedSkills = [
                 switch (linkName) {
                         case 'experience':
                                 grid2.setAttribute('id','experienceDiv')
-
 
 const jobExperiences = [
     {
@@ -404,10 +423,6 @@ jobExperiences.forEach((job, index) => {
         }
     });
 });
-
-
-
-
 
                                 grid3.style.display = 'none'
                                 break;
