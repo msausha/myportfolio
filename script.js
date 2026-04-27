@@ -322,7 +322,7 @@ function buildSkills() {
     gsap.from("#skillDiv .card", {
       translateY: [20, 0],
       opacity: [0, 1],
-      easing: "easeOutExpo",
+      ease: "easeOutExpo",
       duration: 0.8,
       delay: 0.15,
       stagger: 0.08
@@ -613,26 +613,50 @@ function buildCommunity() {
 /* About / Contact links */
 const aboutSectionInfo = [
   { type: "Email", info: "shakilmsa@yahoo.com" },
-  { type: "Mobile", info: "0406 001 444" },
   { type: "LinkedIn", info: "https://www.linkedin.com/in/shakil-a-b2225418b/" }
 ];
 
+// 1. The Global Helper Function
+window.showMobile = function(button, originalNumber, telLink) {
+  const container = document.getElementById("mobile-container");
+  if (container) {
+    container.innerHTML = `<a href="tel:${telLink}">${originalNumber}</a>`;
+  }
+};
+
+// 2. Your Main Builder Function
 function buildAboutLinks() {
   const list = document.getElementById("aboutLinks");
   if (!list) return;
   list.innerHTML = "";
+  
   aboutSectionInfo.forEach((item) => {
     const li = document.createElement("li");
 
     if (item.type === "Email") {
       li.innerHTML = `<strong>Email:</strong> <a href="mailto:${item.info}">${item.info}</a>`;
-    } else if (item.type === "Mobile") {
+    } 
+    else if (item.type === "Mobile") {
       const tel = item.info.replace(/\s+/g, "").replace(/^0/, "+61");
-      li.innerHTML = `<strong>Mobile:</strong> <a href="tel:${tel}">${item.info}</a>`;
-    } else if (item.type === "LinkedIn") {
+      const maskedInfo = item.info.substring(0, 4) + " xxx xxx";
+
+      li.innerHTML = `
+        <strong>Mobile:</strong> 
+        <span id="mobile-container">
+          <span id="masked-phone">${maskedInfo}</span>
+          <button onclick="showMobile(this, '${item.info}', '${tel}')" 
+                  style="margin-left:10px; cursor:pointer; font-size: 0.8em; padding: 2px 5px;">
+            Show Number
+          </button>
+        </span>`;
+    }
+    else if (item.type === "LinkedIn") {
       li.innerHTML = `<strong>LinkedIn:</strong> <a href="${item.info}" target="_blank" rel="noopener noreferrer">LinkedIn Profile</a>`;
     }
 
     list.appendChild(li);
   });
 }
+
+// Call the function to run it
+buildAboutLinks();
