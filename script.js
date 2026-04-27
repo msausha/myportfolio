@@ -1,7 +1,6 @@
-// Typed roles in hero
+// script.js
 document.addEventListener("DOMContentLoaded", function () {
-  AOS.init({ duration: 800, once: true });
-
+  // Initialize typed roles (keeps your original strings & timing)
   new Typed("#typed-roles", {
     strings: [
       "Senior Systems Engineer",
@@ -16,6 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
     showCursor: true
   });
 
+  // Build page content (your existing functions)
   buildExperience();
   buildSkills();
   buildStrengths();
@@ -24,9 +24,163 @@ document.addEventListener("DOMContentLoaded", function () {
   buildCertifications();
   buildCommunity();
   buildAboutLinks();
+
+  // GSAP + ScrollTrigger setup
+  if (typeof gsap !== "undefined") {
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Hero entrance timeline
+    const heroTl = gsap.timeline();
+    heroTl
+      .from(".hero-kicker", { y: 20, opacity: 0, duration: 0.45, ease: "power2.out" })
+      .from(".hero-title", { y: 30, opacity: 0, duration: 0.6, ease: "power2.out" }, "-=0.25")
+      .from(".hero-subtitle", { y: 20, opacity: 0, duration: 0.45, stagger: 0.12 }, "-=0.35")
+      .from(".hero-typed", { y: 10, opacity: 0, duration: 0.4 }, "-=0.25")
+      .from(".hero-cta .btn", { y: 20, opacity: 0, duration: 0.4, stagger: 0.08 }, "-=0.25")
+      .from(".hero-card", { x: 40, opacity: 0, duration: 0.6, ease: "power2.out" }, "-=0.6");
+
+    // Section reveal animations
+    const sections = document.querySelectorAll(".section-padding");
+    sections.forEach((section) => {
+      const header = section.querySelector(".section-header");
+      if (header) {
+        gsap.from(header, {
+          scrollTrigger: {
+            trigger: section,
+            start: "top 80%",
+            toggleActions: "play none none reverse"
+          },
+          y: 30,
+          opacity: 0,
+          duration: 0.6,
+          ease: "power2.out"
+        });
+      }
+
+      // stagger reveal for cards inside section
+      const items = section.querySelectorAll(".card, .project-card, .training-item, .cert-card, .strength-card, .contact-card, .accordion-item");
+      if (items.length) {
+        gsap.from(items, {
+          scrollTrigger: {
+            trigger: section,
+            start: "top 80%",
+            toggleActions: "play none none reverse"
+          },
+          y: 24,
+          opacity: 0,
+          duration: 0.6,
+          stagger: 0.08,
+          ease: "power2.out"
+        });
+      }
+    });
+
+    // subtle parallax for hero-right card on scroll
+    gsap.to("#hero-right .hero-card", {
+      y: -20,
+      ease: "none",
+      scrollTrigger: {
+        trigger: "#hero",
+        start: "top top",
+        end: "bottom top",
+        scrub: 0.6
+      }
+    });
+  }
+
+  // Vanta background (NET) for hero - subtle, professional
+  // Only initialize if VANTA is available and screen is not tiny
+  if (typeof VANTA !== "undefined" && window.innerWidth > 600) {
+    try {
+      window._vantaHero = VANTA.NET({
+        el: "#hero-bg",
+        color: 0x22c55e,
+        backgroundColor: 0x020617,
+        points: 10.0,
+        maxDistance: 20.0,
+        spacing: 18.0,
+        showDots: false,
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false
+      });
+    } catch (e) {
+      console.warn("Vanta init failed:", e);
+    }
+  }
+
+  // Destroy Vanta on unload to avoid memory leaks
+  window.addEventListener("beforeunload", () => {
+    if (window._vantaHero && typeof window._vantaHero.destroy === "function") {
+      window._vantaHero.destroy();
+    }
+  });
+
+  // Navbar scroll state (adds subtle shadow when scrolled)
+  const nav = document.querySelector(".custom-nav");
+  function onScrollNav() {
+    if (window.scrollY > 40) nav.classList.add("scrolled");
+    else nav.classList.remove("scrolled");
+  }
+  onScrollNav();
+  window.addEventListener("scroll", onScrollNav);
+
+  // Smooth scroll for internal nav links WITHOUT leaving hash in URL
+  const navLinks = document.querySelectorAll('.navbar-nav .nav-link[href^="#"]');
+  navLinks.forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      const href = link.getAttribute("href");
+      const id = href.startsWith("#") ? href.slice(1) : href;
+      const target = document.getElementById(id);
+      if (!target) return;
+
+      // Use native smooth scroll
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+
+      // Remove hash from URL while preserving history entry (no # shown)
+      // Use replaceState to avoid adding extra history entries
+      setTimeout(() => {
+        history.replaceState(null, "", window.location.pathname + window.location.search);
+      }, 600); // delay to allow scroll to start
+    });
+  });
+
+  // Also handle direct CTA buttons that use href="#..."
+  const ctaLinks = document.querySelectorAll('a[href^="#"]');
+  ctaLinks.forEach((a) => {
+    a.addEventListener("click", (e) => {
+      const href = a.getAttribute("href");
+      if (!href || !href.startsWith("#")) return;
+      const id = href.slice(1);
+      const target = document.getElementById(id);
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      setTimeout(() => {
+        history.replaceState(null, "", window.location.pathname + window.location.search);
+      }, 600);
+    });
+  });
+
+  // Accessibility: allow keyboard focus to open accordion items
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      const active = document.activeElement;
+      if (active && active.classList.contains("accordion-button")) {
+        active.click();
+      }
+    }
+  });
 });
 
-// Experience data (from your resume + existing JS)
+/* ---------------------------
+   Below: your original builders
+   (Experience, Skills, Strengths, Projects, Trainings, Certifications, Community, About Links)
+   I preserved your arrays and logic; only minor improvements for accessibility and small fixes.
+   --------------------------- */
+
+/* Experience data (from your resume + existing JS) */
 const jobExperiences = [
   {
     title: "Senior Systems Engineer",
@@ -82,22 +236,27 @@ const jobExperiences = [
 
 function buildExperience() {
   const container = document.getElementById("experienceDiv");
+  if (!container) return;
+  container.innerHTML = "";
   jobExperiences.forEach((job, index) => {
     const item = document.createElement("div");
-    item.classList.add("accordion-item");
+    item.classList.add("accordion-item", "col-12");
 
     const button = document.createElement("button");
     button.classList.add("accordion-button");
+    button.setAttribute("aria-expanded", "false");
+    button.setAttribute("type", "button");
     button.innerHTML = `
       <span>
-        ${job.title} ${job.company ? " | " + job.company : ""} ${job.location ? " | " + job.location : ""}
+        <strong>${job.title}</strong> ${job.company ? " | " + job.company : ""} ${job.location ? " | " + job.location : ""}
       </span>
-      <span class="accordion-icon">+</span>
+      <span class="accordion-icon" aria-hidden="true">+</span>
     `;
 
     const content = document.createElement("div");
     content.classList.add("accordion-content");
     content.style.display = "none";
+    content.setAttribute("aria-hidden", "true");
 
     const meta = document.createElement("p");
     meta.innerHTML = `<strong>${job.duration}</strong>`;
@@ -120,19 +279,22 @@ function buildExperience() {
       document.querySelectorAll("#experienceDiv .accordion-item").forEach((i) => {
         i.classList.remove("active");
         i.querySelector(".accordion-content").style.display = "none";
+        i.querySelector(".accordion-content").setAttribute("aria-hidden", "true");
+        i.querySelector(".accordion-button").setAttribute("aria-expanded", "false");
         i.querySelector(".accordion-icon").textContent = "+";
       });
       if (!isActive) {
         item.classList.add("active");
         content.style.display = "block";
+        content.setAttribute("aria-hidden", "false");
+        button.setAttribute("aria-expanded", "true");
         button.querySelector(".accordion-icon").textContent = "-";
       }
     });
   });
 }
 
-// Skills (from your existing cardData + skills arrays)
-
+/* Skills */
 const skillCards = [
   "Azure Cloud: VNet, Hub & Spoke, NSG, UDR, VPN Gateway, App Service, App Insights, Log Analytics",
   "Microsoft 365: Exchange Online, SharePoint, Teams, Intune, Security & Compliance, Identity Governance",
@@ -144,9 +306,10 @@ const skillCards = [
   "AI & Automation: AI Agent Workflows, Ticket Triage Automation, Data Processing Integrations"
 ];
 
-
 function buildSkills() {
   const grid = document.getElementById("skillDiv");
+  if (!grid) return;
+  grid.innerHTML = "";
   skillCards.forEach((text) => {
     const card = document.createElement("div");
     card.classList.add("card");
@@ -154,18 +317,20 @@ function buildSkills() {
     grid.appendChild(card);
   });
 
-  anime({
-    targets: "#skillDiv .card",
-    translateY: [20, 0],
-    opacity: [0, 1],
-    easing: "easeOutExpo",
-    duration: 800,
-    delay: anime.stagger(80)
-  });
+  // small entrance animation using GSAP if available
+  if (typeof gsap !== "undefined") {
+    gsap.from("#skillDiv .card", {
+      translateY: [20, 0],
+      opacity: [0, 1],
+      easing: "easeOutExpo",
+      duration: 0.8,
+      delay: 0.15,
+      stagger: 0.08
+    });
+  }
 }
 
-// Strengths (from your existing strengths object)
-
+/* Strengths */
 const strengths = {
   professional: [
     "Project Management",
@@ -202,6 +367,8 @@ const strengths = {
 
 function buildStrengths() {
   const grid = document.getElementById("strengthDiv");
+  if (!grid) return;
+  grid.innerHTML = "";
 
   function createCard(title, arr) {
     const card = document.createElement("div");
@@ -218,6 +385,7 @@ function buildStrengths() {
     card.appendChild(out);
     grid.appendChild(card);
 
+    // Use Typed on the element (works with string arrays)
     new Typed(out, {
       strings: arr,
       typeSpeed: 40,
@@ -234,8 +402,7 @@ function buildStrengths() {
   createCard("Personal Strengths", strengths.personal);
 }
 
-// Projects (from your existing projects array)
-
+/* Projects */
 const projects = [
   {
     projectName: "Azure Hybrid Infrastructure – Hub & Spoke Deployment",
@@ -341,10 +508,10 @@ const projects = [
   }
 ];
 
-
-
 function buildProjects() {
   const grid = document.getElementById("projectsGrid");
+  if (!grid) return;
+  grid.innerHTML = "";
   projects.forEach((p) => {
     const col = document.createElement("div");
     col.classList.add("col-md-6", "col-lg-4");
@@ -374,8 +541,7 @@ function buildProjects() {
   });
 }
 
-// Trainings (from your existing trainings case)
-
+/* Trainings */
 const trainings = [
   "Azure Fundamentals",
   "Office 365 Admin",
@@ -389,6 +555,8 @@ const trainings = [
 
 function buildTrainings() {
   const grid = document.getElementById("trainingsGrid");
+  if (!grid) return;
+  grid.innerHTML = "";
   trainings.forEach((t) => {
     const item = document.createElement("div");
     item.classList.add("training-item");
@@ -397,8 +565,7 @@ function buildTrainings() {
   });
 }
 
-// Certifications (from your existing certifications case + resume)
-
+/* Certifications */
 const certifications = [
   { title: "CCNA", desc: "Cisco Certified Network Associate" },
   { title: "JNCIA", desc: "Juniper Networks Certified Associate" },
@@ -407,6 +574,8 @@ const certifications = [
 
 function buildCertifications() {
   const grid = document.getElementById("certificationsGrid");
+  if (!grid) return;
+  grid.innerHTML = "";
   certifications.forEach((c) => {
     const card = document.createElement("div");
     card.classList.add("cert-card");
@@ -418,8 +587,7 @@ function buildCertifications() {
   });
 }
 
-// Community (from your existing community case)
-
+/* Community */
 const communityItems = [
   "Mentored junior engineers in PowerShell and troubleshooting techniques.",
   "Participated in design/code review sessions in cross-functional teams.",
@@ -428,6 +596,8 @@ const communityItems = [
 
 function buildCommunity() {
   const container = document.getElementById("communityContent");
+  if (!container) return;
+  container.innerHTML = "";
   const h = document.createElement("h4");
   h.textContent = "Activities";
   const ul = document.createElement("ul");
@@ -440,8 +610,7 @@ function buildCommunity() {
   container.appendChild(ul);
 }
 
-// About / Contact links (from your existing aboutSectionInfo)
-
+/* About / Contact links */
 const aboutSectionInfo = [
   { type: "Email", info: "shakilmsa@yahoo.com" },
   { type: "Mobile", info: "0406 001 444" },
@@ -450,6 +619,8 @@ const aboutSectionInfo = [
 
 function buildAboutLinks() {
   const list = document.getElementById("aboutLinks");
+  if (!list) return;
+  list.innerHTML = "";
   aboutSectionInfo.forEach((item) => {
     const li = document.createElement("li");
 
@@ -459,7 +630,7 @@ function buildAboutLinks() {
       const tel = item.info.replace(/\s+/g, "").replace(/^0/, "+61");
       li.innerHTML = `<strong>Mobile:</strong> <a href="tel:${tel}">${item.info}</a>`;
     } else if (item.type === "LinkedIn") {
-      li.innerHTML = `<strong>LinkedIn:</strong> <a href="${item.info}" target="_blank">LinkedIn Profile</a>`;
+      li.innerHTML = `<strong>LinkedIn:</strong> <a href="${item.info}" target="_blank" rel="noopener noreferrer">LinkedIn Profile</a>`;
     }
 
     list.appendChild(li);
