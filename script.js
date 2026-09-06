@@ -127,12 +127,11 @@ const trainings = [
 ];
 
 const certifications = [
-  { title: "AZ‑104 — Microsoft Certified: Azure Administrator Associate", desc: "Core Azure administration skills including identity, governance, storage, compute, networking, and monitoring." },
-  { title: "CCNA — Cisco Certified Network Associate", desc: "Networking fundamentals, routing, switching, and basic security." },
-  { title: "JNCIA — Juniper Networks Certified Associate", desc: "Juniper networking fundamentals and Junos OS." },
-  { title: "ITIL v3 Foundation", desc: "IT service management best practices and lifecycle processes." }
+  { title: "CCNA", desc: "Cisco Certified Network Associate" },
+  { title: "JNCIA", desc: "Juniper Networks Certified Associate" },
+  { title: "ITIL v3 Foundation", desc: "IT Service Management Best Practices" },
+  { title: "AZ-104", desc: "Microsoft Azure Administrator Associate" }
 ];
-
 
 const community = [
   "Mentored junior engineers in PowerShell and troubleshooting techniques.",
@@ -330,6 +329,86 @@ async function loadMelbourneWeather() {
     tempEl.textContent = "--°";
     descEl.textContent = "Unavailable";
     console.warn("Weather load failed:", err);
+  }
+}
+
+/* =====================================================
+   LIVE TECH PULSE (Hacker News – free, no key)
+   ===================================================== */
+async function loadTechPulse() {
+  const track = document.getElementById("techPulseTrack");
+  if (!track) return;
+
+  // Relevance-focused queries for a Systems / Azure engineer
+  const queries = [
+    "Azure cloud",
+    "Microsoft 365 OR Intune",
+    "hybrid cloud",
+    "PowerShell",
+    "VMware OR Hyper-V",
+    "cybersecurity",
+    "DevOps automation",
+    "Virtualization OR VMware OR Hyper-V",
+    "Azure cloud",
+    "Microsoft 365",
+    "MFA OR Conditional Access",
+    "networking OR routing OR firewall",
+    "PowerShell OR scripting",
+    "cloud infrastructure",
+    "ITIL OR IT service management"
+  ];
+
+  try {
+    // Fetch a few filtered searches in parallel, then merge unique stories
+    const results = await Promise.all(
+      queries.map((q) =>
+        fetch(
+          `https://hn.algolia.com/api/v1/search?query=${encodeURIComponent(q)}&tags=story&hitsPerPage=6`
+        ).then((r) => (r.ok ? r.json() : { hits: [] }))
+      )
+    );
+
+    const seen = new Set();
+    const items = [];
+
+    results.forEach((data) => {
+      (data.hits || []).forEach((hit) => {
+        if (!hit.title || seen.has(hit.objectID)) return;
+        seen.add(hit.objectID);
+        const url = hit.url || `https://news.ycombinator.com/item?id=${hit.objectID}`;
+        items.push({ title: hit.title, url, points: hit.points || 0 });
+      });
+    });
+
+    // Prefer higher-signal stories, keep a manageable set
+    items.sort((a, b) => b.points - a.points);
+    const top = items.slice(0, 12);
+
+    if (top.length === 0) {
+      track.innerHTML = `<span class="tp-loading">No headlines right now</span>`;
+      return;
+    }
+
+    // Duplicate list for seamless infinite scroll
+    const renderItems = (list) =>
+      list
+        .map(
+          (item) =>
+            `<a class="tp-item" href="${item.url}" target="_blank" rel="noopener noreferrer">
+              <span class="tp-source">HN</span>
+              <span>${item.title}</span>
+            </a>`
+        )
+        .join("");
+
+    track.innerHTML = renderItems(top) + renderItems(top);
+    // Start animation after layout
+    requestAnimationFrame(() => {
+      track.classList.add("animating");
+    });
+  } catch (err) {
+    console.warn("Tech pulse failed:", err);
+    track.innerHTML = `<span class="tp-loading">Headlines unavailable</span>`;
   }
 }
 
@@ -677,10 +756,11 @@ document.addEventListener("DOMContentLoaded", () => {
   buildCerts();
   buildCommunity();
 
-  // 2. Nav + clock
+  // 2. Nav + clock + live news
   initNav();
   startMelbourneClock();
   loadMelbourneWeather();
+  loadTechPulse();
 
   // 3. Heavy visual work after first paint
   const schedule = (fn) => {

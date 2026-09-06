@@ -31,14 +31,15 @@ html {
 body {
   font-family: "Outfit", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   background: var(--bg-deep);
-  user-select: none;
-  -webkit-user-select: none;
   color: var(--text);
   overflow-x: hidden;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  user-select: none;
+  -webkit-user-select: none;
 }
+
 input, textarea {
   user-select: text;
   -webkit-user-select: text;
@@ -252,10 +253,11 @@ section {
 
 /* ===== HERO ===== */
 .hero {
-  min-height: 100svh;
+  min-height: 80svh;
+  min-width: 50%;
   display: flex;
-  align-items: center;
-  padding: calc(var(--nav-h) + 2.5rem) 0 4rem;
+  align-items: flex-start;   /* sit content near the top, not vertically centered */
+  padding: calc(var(--nav-h) + 1.2rem) 0 2.5rem;  /* nav + ticker + small gap */
 }
 
 .hero-grid {
@@ -413,6 +415,114 @@ section {
 .mw-desc {
   font-size: 0.82rem;
   color: var(--text-muted);
+}
+
+/* ===== LIVE TECH PULSE – full width under navbar ===== */
+.tech-pulse-bar {
+  position: relative;
+  z-index: 90;
+  margin-top: var(--nav-h);
+  background: rgba(12, 19, 34, 0.92);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.tp-inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 0.55rem;
+  padding-bottom: 0.55rem;
+  max-width: 1140px;
+}
+
+.tp-label {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  white-space: nowrap;
+  padding-right: 0.85rem;
+  border-right: 1px solid var(--border);
+}
+
+.tp-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-3);
+  box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.5);
+  animation: tp-pulse 1.8s ease-out infinite;
+}
+
+@keyframes tp-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.45); }
+  70% { box-shadow: 0 0 0 6px rgba(52, 211, 153, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+}
+
+.tp-track-wrap {
+  flex: 1;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+}
+
+.tp-track {
+  display: flex;
+  align-items: center;
+  gap: 2.25rem;
+  white-space: nowrap;
+  width: max-content;
+  will-change: transform;
+}
+
+.tp-track.animating {
+  animation: tp-scroll 80s linear infinite;
+}
+
+.tp-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes tp-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.tp-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.tp-item:hover {
+  color: var(--accent);
+}
+
+.tp-item .tp-source {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+  opacity: 0.9;
+}
+
+.tp-loading {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  opacity: 0.7;
 }
 
 /* Hero card */
