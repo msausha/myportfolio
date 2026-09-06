@@ -1,187 +1,12 @@
-// script.js
-document.addEventListener("DOMContentLoaded", function () {
-  // Initialize typed roles (keeps your original strings & timing)
-  new Typed("#typed-roles", {
-    strings: [
-      "Senior Systems Engineer",
-      "Hybrid Infrastructure & Cloud Administration",
-      "Azure & Microsoft 365 Engineer",
-      "Network & Virtualization Specialist"
-    ],
-    typeSpeed: 40,
-    backSpeed: 25,
-    backDelay: 1200,
-    loop: true,
-    showCursor: true
-  });
+/**
+ * Shakil Ahmed – Portfolio
+ * Enterprise-grade · Fast · Separate modules
+ */
 
-  // Build page content (your existing functions)
-  buildExperience();
-  buildSkills();
-  buildStrengths();
-  buildProjects();
-  buildTrainings();
-  buildCertifications();
-  buildCommunity();
-  buildAboutLinks();
-
-  // GSAP + ScrollTrigger setup
-  if (typeof gsap !== "undefined") {
-    gsap.registerPlugin(ScrollTrigger);
-
-    // Hero entrance timeline
-    const heroTl = gsap.timeline();
-    heroTl
-      .from(".hero-kicker", { y: 20, opacity: 0, duration: 0.45, ease: "power2.out" })
-      .from(".hero-title", { y: 30, opacity: 0, duration: 0.6, ease: "power2.out" }, "-=0.25")
-      .from(".hero-subtitle", { y: 20, opacity: 0, duration: 0.45, stagger: 0.12 }, "-=0.35")
-      .from(".hero-typed", { y: 10, opacity: 0, duration: 0.4 }, "-=0.25")
-      .from(".hero-cta .btn", { y: 20, opacity: 0, duration: 0.4, stagger: 0.08 }, "-=0.25")
-      .from(".hero-card", { x: 40, opacity: 0, duration: 0.6, ease: "power2.out" }, "-=0.6");
-
-    // Section reveal animations
-    const sections = document.querySelectorAll(".section-padding");
-    sections.forEach((section) => {
-      const header = section.querySelector(".section-header");
-      if (header) {
-        gsap.from(header, {
-          scrollTrigger: {
-            trigger: section,
-            start: "top 80%",
-            toggleActions: "play none none reverse"
-          },
-          y: 30,
-          opacity: 0,
-          duration: 0.6,
-          ease: "power2.out"
-        });
-      }
-
-      // stagger reveal for cards inside section
-      const items = section.querySelectorAll(".card, .project-card, .training-item, .cert-card, .strength-card, .contact-card, .accordion-item");
-      if (items.length) {
-        gsap.from(items, {
-          scrollTrigger: {
-            trigger: section,
-            start: "top 80%",
-            toggleActions: "play none none reverse"
-          },
-          y: 24,
-          opacity: 0,
-          duration: 0.6,
-          stagger: 0.08,
-          ease: "power2.out"
-        });
-      }
-    });
-
-    // subtle parallax for hero-right card on scroll
-    gsap.to("#hero-right .hero-card", {
-      y: -20,
-      ease: "none",
-      scrollTrigger: {
-        trigger: "#hero",
-        start: "top top",
-        end: "bottom top",
-        scrub: 0.6
-      }
-    });
-  }
-
-  // Vanta background (NET) for hero - subtle, professional
-  // Only initialize if VANTA is available and screen is not tiny
-  if (typeof VANTA !== "undefined" && window.innerWidth > 600) {
-    try {
-      window._vantaHero = VANTA.NET({
-        el: "#hero-bg",
-        color: 0x22c55e,
-        backgroundColor: 0x020617,
-        points: 10.0,
-        maxDistance: 20.0,
-        spacing: 18.0,
-        showDots: false,
-        mouseControls: true,
-        touchControls: true,
-        gyroControls: false
-      });
-    } catch (e) {
-      console.warn("Vanta init failed:", e);
-    }
-  }
-
-  // Destroy Vanta on unload to avoid memory leaks
-  window.addEventListener("beforeunload", () => {
-    if (window._vantaHero && typeof window._vantaHero.destroy === "function") {
-      window._vantaHero.destroy();
-    }
-  });
-
-  // Navbar scroll state (adds subtle shadow when scrolled)
-  const nav = document.querySelector(".custom-nav");
-  function onScrollNav() {
-    if (window.scrollY > 40) nav.classList.add("scrolled");
-    else nav.classList.remove("scrolled");
-  }
-  onScrollNav();
-  window.addEventListener("scroll", onScrollNav);
-
-  // Smooth scroll for internal nav links WITHOUT leaving hash in URL
-  const navLinks = document.querySelectorAll('.navbar-nav .nav-link[href^="#"]');
-  navLinks.forEach((link) => {
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
-      const href = link.getAttribute("href");
-      const id = href.startsWith("#") ? href.slice(1) : href;
-      const target = document.getElementById(id);
-      if (!target) return;
-
-      // Use native smooth scroll
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
-
-      // Remove hash from URL while preserving history entry (no # shown)
-      // Use replaceState to avoid adding extra history entries
-      setTimeout(() => {
-        history.replaceState(null, "", window.location.pathname + window.location.search);
-      }, 600); // delay to allow scroll to start
-    });
-  });
-
-  // Also handle direct CTA buttons that use href="#..."
-  const ctaLinks = document.querySelectorAll('a[href^="#"]');
-  ctaLinks.forEach((a) => {
-    a.addEventListener("click", (e) => {
-      const href = a.getAttribute("href");
-      if (!href || !href.startsWith("#")) return;
-      const id = href.slice(1);
-      const target = document.getElementById(id);
-      if (!target) return;
-      e.preventDefault();
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
-      setTimeout(() => {
-        history.replaceState(null, "", window.location.pathname + window.location.search);
-      }, 600);
-    });
-  });
-
-  // Accessibility: allow keyboard focus to open accordion items
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" || e.key === " ") {
-      const active = document.activeElement;
-      if (active && active.classList.contains("accordion-button")) {
-        active.click();
-      }
-    }
-  });
-});
-
-/* ---------------------------
-   Below: your original builders
-   (Experience, Skills, Strengths, Projects, Trainings, Certifications, Community, About Links)
-   I preserved your arrays and logic; only minor improvements for accessibility and small fixes.
-   --------------------------- */
-
-/* Experience data (from your resume + existing JS) */
-const jobExperiences = [
+/* =====================================================
+   DATA
+   ===================================================== */
+const experiences = [
   {
     title: "Senior Systems Engineer",
     company: "Greenlight Australia",
@@ -234,429 +59,640 @@ const jobExperiences = [
   }
 ];
 
-function buildExperience() {
-  const container = document.getElementById("experienceDiv");
-  if (!container) return;
-  container.innerHTML = "";
-  jobExperiences.forEach((job, index) => {
-    const item = document.createElement("div");
-    item.classList.add("accordion-item", "col-12");
-
-    const button = document.createElement("button");
-    button.classList.add("accordion-button");
-    button.setAttribute("aria-expanded", "false");
-    button.setAttribute("type", "button");
-    button.innerHTML = `
-      <span>
-        <strong>${job.title}</strong> ${job.company ? " | " + job.company : ""} ${job.location ? " | " + job.location : ""}
-      </span>
-      <span class="accordion-icon" aria-hidden="true">+</span>
-    `;
-
-    const content = document.createElement("div");
-    content.classList.add("accordion-content");
-    content.style.display = "none";
-    content.setAttribute("aria-hidden", "true");
-
-    const meta = document.createElement("p");
-    meta.innerHTML = `<strong>${job.duration}</strong>`;
-
-    const ul = document.createElement("ul");
-    job.details.forEach((d) => {
-      const li = document.createElement("li");
-      li.textContent = d;
-      ul.appendChild(li);
-    });
-
-    content.appendChild(meta);
-    content.appendChild(ul);
-    item.appendChild(button);
-    item.appendChild(content);
-    container.appendChild(item);
-
-    button.addEventListener("click", () => {
-      const isActive = item.classList.contains("active");
-      document.querySelectorAll("#experienceDiv .accordion-item").forEach((i) => {
-        i.classList.remove("active");
-        i.querySelector(".accordion-content").style.display = "none";
-        i.querySelector(".accordion-content").setAttribute("aria-hidden", "true");
-        i.querySelector(".accordion-button").setAttribute("aria-expanded", "false");
-        i.querySelector(".accordion-icon").textContent = "+";
-      });
-      if (!isActive) {
-        item.classList.add("active");
-        content.style.display = "block";
-        content.setAttribute("aria-hidden", "false");
-        button.setAttribute("aria-expanded", "true");
-        button.querySelector(".accordion-icon").textContent = "-";
-      }
-    });
-  });
-}
-
-/* Skills */
-const skillCards = [
+const skills = [
   "Azure Cloud: VNet, Hub & Spoke, NSG, UDR, VPN Gateway, App Service, App Insights, Log Analytics",
   "Microsoft 365: Exchange Online, SharePoint, Teams, Intune, Security & Compliance, Identity Governance",
   "Identity & Security: Azure AD, MFA, Conditional Access, Security Defaults, OAuth, SSO, Access Policies",
   "Automation & Scripting: PowerShell, Bash, Python, Workflow Automation, Diagnostics Automation",
-  "Infrastructure & Systems: Windows Server, Linux Administration, VMware, Hyper‑V, Patch Management",
+  "Infrastructure & Systems: Windows Server, Linux Administration, VMware, Hyper-V, Patch Management",
   "Networking: Routing & Switching, VLAN, VPN, Firewall Management, TCP/IP Fundamentals",
   "DevOps & Integration: Git, GitHub, CI/CD Basics, API Integration, JSON, Monitoring & RCA",
   "AI & Automation: AI Agent Workflows, Ticket Triage Automation, Data Processing Integrations"
 ];
 
-function buildSkills() {
-  const grid = document.getElementById("skillDiv");
-  if (!grid) return;
-  grid.innerHTML = "";
-  skillCards.forEach((text) => {
-    const card = document.createElement("div");
-    card.classList.add("card");
-    card.textContent = text;
-    grid.appendChild(card);
-  });
-
-  // small entrance animation using GSAP if available
-  if (typeof gsap !== "undefined") {
-    gsap.from("#skillDiv .card", {
-      translateY: [20, 0],
-      opacity: [0, 1],
-      ease: "easeOutExpo",
-      duration: 0.8,
-      delay: 0.15,
-      stagger: 0.08
-    });
-  }
-}
-
-/* Strengths */
 const strengths = {
-  professional: [
-    "Project Management",
-    "Team Collaboration",
-    "Client Engagement",
-    "Problem-Solving",
-    "Leadership",
-    "Business Strategy",
-    "Time Management"
-  ],
-  technical: [
-    "Microsoft 365 Administration",
-    "Azure Cloud Administration",
-    "IT Service Management (ITIL)",
-    "Full-Stack Web Development",
-    "Cloud Infrastructure & Virtualization",
-    "Database Design & Management",
-    "Version Control & CI/CD (Git, GitHub, GitLab)",
-    "RESTful API Development & Integration",
-    "Automation & Scripting (PowerShell, Bash, Python)",
-    "Cybersecurity & Compliance Best Practices"
-  ],
-  personal: [
-    "Adaptability",
-    "Continuous Learning",
-    "Attention to Detail",
-    "Communication Skills",
-    "Critical Thinking",
-    "Empathy and Emotional Intelligence",
-    "Time Management",
-    "Creativity"
-  ]
+  professional: ["Project Management", "Team Collaboration", "Client Engagement", "Problem-Solving", "Leadership", "Business Strategy", "Time Management"],
+  technical: ["Microsoft 365 Administration", "Azure Cloud Administration", "IT Service Management (ITIL)", "Full-Stack Web Development", "Cloud Infrastructure & Virtualization", "Database Design & Management", "Version Control & CI/CD", "RESTful API Development", "Automation & Scripting", "Cybersecurity & Compliance"],
+  personal: ["Adaptability", "Continuous Learning", "Attention to Detail", "Communication Skills", "Critical Thinking", "Empathy", "Time Management", "Creativity"]
 };
 
-function buildStrengths() {
-  const grid = document.getElementById("strengthDiv");
-  if (!grid) return;
-  grid.innerHTML = "";
-
-  function createCard(title, arr) {
-    const card = document.createElement("div");
-    card.classList.add("strength-card");
-
-    const t = document.createElement("div");
-    t.classList.add("strength-title");
-    t.textContent = title;
-
-    const out = document.createElement("div");
-    out.classList.add("typed-output");
-
-    card.appendChild(t);
-    card.appendChild(out);
-    grid.appendChild(card);
-
-    // Use Typed on the element (works with string arrays)
-    new Typed(out, {
-      strings: arr,
-      typeSpeed: 40,
-      backSpeed: 30,
-      backDelay: 1000,
-      startDelay: 500,
-      loop: true,
-      showCursor: true
-    });
-  }
-
-  createCard("Professional Strengths", strengths.professional);
-  createCard("Technical Strengths", strengths.technical);
-  createCard("Personal Strengths", strengths.personal);
-}
-
-/* Projects */
 const projects = [
   {
-    projectName: "Azure Hybrid Infrastructure – Hub & Spoke Deployment",
+    name: "Azure Hybrid Infrastructure – Hub & Spoke Deployment",
     duration: "Ongoing",
-    whoIsThisFor: "Enterprise Infrastructure",
-    whatDidILearn:
-      "Designed and supported hybrid cloud infrastructure using Azure Hub-and-Spoke, VPN gateways, routing, NSGs, and security hardening.",
-    skillsAndToolsUsed: [
-      "Azure VNet",
-      "Hub & Spoke",
-      "NSG",
-      "UDR",
-      "VPN Gateway",
-      "Azure Firewall",
-      "PowerShell",
-      "Monitoring"
-    ]
+    for: "Enterprise Infrastructure",
+    desc: "Designed and supported hybrid cloud infrastructure using Azure Hub-and-Spoke, VPN gateways, routing, NSGs, and security hardening.",
+    tags: ["Azure VNet", "Hub & Spoke", "NSG", "UDR", "VPN Gateway", "Azure Firewall", "PowerShell"]
   },
   {
-    projectName: "Azure AD + Microsoft 365 Application Integration",
+    name: "Azure AD + Microsoft 365 Application Integration",
     duration: "Ongoing",
-    whoIsThisFor: "Identity & Access Management",
-    whatDidILearn:
-      "Integrated external applications with Azure AD using OAuth and SSO, configured Conditional Access, MFA, and identity governance.",
-    skillsAndToolsUsed: [
-      "Azure AD",
-      "App Registrations",
-      "OAuth",
-      "SSO",
-      "Conditional Access",
-      "MFA",
-      "Security Defaults",
-      "PowerShell"
-    ]
+    for: "Identity & Access Management",
+    desc: "Integrated external applications with Azure AD using OAuth and SSO, configured Conditional Access, MFA, and identity governance.",
+    tags: ["Azure AD", "OAuth", "SSO", "Conditional Access", "MFA", "PowerShell"]
   },
   {
-    projectName: "SharePoint + Power Automate Workflow Automation",
+    name: "SharePoint + Power Automate Workflow Automation",
     duration: "Ongoing",
-    whoIsThisFor: "Business Process Automation",
-    whatDidILearn:
-      "Built automated workflows for approvals, notifications, and document processing using Power Automate and SharePoint.",
-    skillsAndToolsUsed: [
-      "SharePoint Online",
-      "Power Automate",
-      "M365",
-      "JSON",
-      "Automation",
-      "API Connectors"
-    ]
+    for: "Business Process Automation",
+    desc: "Built automated workflows for approvals, notifications, and document processing using Power Automate and SharePoint.",
+    tags: ["SharePoint Online", "Power Automate", "M365", "JSON", "Automation"]
   },
   {
-    projectName: "Azure App Service Deployment & M365 Monitoring Integration",
+    name: "Azure App Service Deployment & M365 Monitoring",
     duration: "Ongoing",
-    whoIsThisFor: "Internal Applications",
-    whatDidILearn:
-      "Deployed applications to Azure App Service with diagnostics, monitoring, and automated notifications to Microsoft Teams.",
-    skillsAndToolsUsed: [
-      "Azure App Service",
-      "App Insights",
-      "Log Analytics",
-      "Teams Webhooks",
-      "PowerShell",
-      "Monitoring"
-    ]
+    for: "Internal Applications",
+    desc: "Deployed applications to Azure App Service with diagnostics, monitoring, and automated notifications to Microsoft Teams.",
+    tags: ["Azure App Service", "App Insights", "Log Analytics", "Teams Webhooks", "PowerShell"]
   },
   {
-    projectName: "AI Agent for Ticket Triage & Aged Care Triage",
+    name: "AI Agent for Ticket Triage & Aged Care Triage",
     duration: "Current Project",
-    whoIsThisFor: "Internal AI Automation",
-    whatDidILearn:
-      "Building an AI agent to classify, triage, and route support tickets and aged care assessments using workflow automation.",
-    skillsAndToolsUsed: [
-      "AI Agent",
-      "Prompt Engineering",
-      "Automation",
-      "API Integration",
-      "Data Processing"
-    ]
+    for: "Internal AI Automation",
+    desc: "Building an AI agent to classify, triage, and route support tickets and aged care assessments using workflow automation.",
+    tags: ["AI Agent", "Prompt Engineering", "Automation", "API Integration"]
   },
   {
-    projectName: "ReactJS & Node.js Admin Panel (Legacy Project)",
+    name: "ReactJS & Node.js Admin Panel",
     duration: "1 month",
-    whoIsThisFor: "E-Commerce Owners",
-    whatDidILearn:
-      "Created an admin panel with backend integration, charts, and inventory management.",
-    skillsAndToolsUsed: [
-      "JavaScript",
-      "Node.js",
-      "Express.js",
-      "MongoDB",
-      "Chart.js",
-      "HTML",
-      "CSS"
-    ]
-  },
-  {
-    projectName: "ReactJS Shopping Cart (Legacy Project)",
-    duration: "1 month",
-    whoIsThisFor: "Online Retailers",
-    whatDidILearn:
-      "Built a shopping cart with state management and cart persistence.",
-    skillsAndToolsUsed: ["ReactJS", "JavaScript", "CSS", "Redux"]
+    for: "E-Commerce Owners",
+    desc: "Created an admin panel with backend integration, charts, and inventory management.",
+    tags: ["JavaScript", "Node.js", "Express.js", "MongoDB", "Chart.js"]
   }
 ];
 
-function buildProjects() {
-  const grid = document.getElementById("projectsGrid");
-  if (!grid) return;
-  grid.innerHTML = "";
-  projects.forEach((p) => {
-    const col = document.createElement("div");
-    col.classList.add("col-md-6", "col-lg-4");
-
-    const card = document.createElement("div");
-    card.classList.add("project-card");
-
-    card.innerHTML = `
-      <h5>${p.projectName}</h5>
-      <div class="project-meta">Duration: ${p.duration}</div>
-      <p><strong>Who is this for:</strong> ${p.whoIsThisFor}</p>
-      <p>${p.whatDidILearn}</p>
-    `;
-
-    const tags = document.createElement("div");
-    tags.classList.add("project-tags");
-    p.skillsAndToolsUsed.forEach((t) => {
-      const span = document.createElement("span");
-      span.classList.add("project-tag");
-      span.textContent = t;
-      tags.appendChild(span);
-    });
-
-    card.appendChild(tags);
-    col.appendChild(card);
-    grid.appendChild(col);
-  });
-}
-
-/* Trainings */
 const trainings = [
-  "Azure Fundamentals",
-  "Office 365 Admin",
-  "PowerShell Automation",
-  "ITIL Foundations",
-  "Windows Server Administration",
-  "Linux for Admins",
-  "Cybersecurity Essentials",
-  "Monitoring & Incident Response"
+  "Azure Fundamentals", "Office 365 Admin", "PowerShell Automation", "ITIL Foundations",
+  "Windows Server Administration", "Linux for Admins", "Cybersecurity Essentials", "Monitoring & Incident Response"
 ];
 
-function buildTrainings() {
-  const grid = document.getElementById("trainingsGrid");
-  if (!grid) return;
-  grid.innerHTML = "";
-  trainings.forEach((t) => {
-    const item = document.createElement("div");
-    item.classList.add("training-item");
-    item.textContent = t;
-    grid.appendChild(item);
-  });
-}
-
-/* Certifications */
 const certifications = [
-  { title: "CCNA", desc: "Cisco Certified Network Associate" },
-  { title: "JNCIA", desc: "Juniper Networks Certified Associate" },
-  { title: "ITIL v3 Foundation", desc: "IT Service Management Best Practices" }
+  { title: "AZ‑104 — Microsoft Certified: Azure Administrator Associate", desc: "Core Azure administration skills including identity, governance, storage, compute, networking, and monitoring." },
+  { title: "CCNA — Cisco Certified Network Associate", desc: "Networking fundamentals, routing, switching, and basic security." },
+  { title: "JNCIA — Juniper Networks Certified Associate", desc: "Juniper networking fundamentals and Junos OS." },
+  { title: "ITIL v3 Foundation", desc: "IT service management best practices and lifecycle processes." }
 ];
 
-function buildCertifications() {
-  const grid = document.getElementById("certificationsGrid");
-  if (!grid) return;
-  grid.innerHTML = "";
-  certifications.forEach((c) => {
-    const card = document.createElement("div");
-    card.classList.add("cert-card");
-    card.innerHTML = `
-      <h3>${c.title}</h3>
-      <p>${c.desc}</p>
-    `;
-    grid.appendChild(card);
-  });
-}
 
-/* Community */
-const communityItems = [
+const community = [
   "Mentored junior engineers in PowerShell and troubleshooting techniques.",
   "Participated in design/code review sessions in cross-functional teams.",
   "Shared knowledge through collaborative issue-solving and tech strategy discussions."
 ];
 
-function buildCommunity() {
-  const container = document.getElementById("communityContent");
-  if (!container) return;
-  container.innerHTML = "";
-  const h = document.createElement("h4");
-  h.textContent = "Activities";
-  const ul = document.createElement("ul");
-  communityItems.forEach((c) => {
-    const li = document.createElement("li");
-    li.textContent = c;
-    ul.appendChild(li);
+/* =====================================================
+   CONTENT BUILDERS (no external deps – runs immediately)
+   ===================================================== */
+function buildExperience() {
+  const list = document.getElementById("experienceList");
+  if (!list) return;
+
+  experiences.forEach((job) => {
+    const item = document.createElement("div");
+    item.className = "glass exp-item";
+    item.innerHTML = `
+      <button class="exp-header" type="button" aria-expanded="false">
+        <span><strong>${job.title}</strong> · ${job.company}${job.location ? " · " + job.location : ""}</span>
+        <span class="exp-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="exp-body">
+        <div class="exp-content">
+          <div class="duration">${job.duration}</div>
+          <ul>${job.details.map((d) => `<li>${d}</li>`).join("")}</ul>
+        </div>
+      </div>`;
+    list.appendChild(item);
+
+    item.querySelector(".exp-header").addEventListener("click", () => {
+      const isActive = item.classList.contains("active");
+      document.querySelectorAll(".exp-item").forEach((el) => {
+        el.classList.remove("active");
+        el.querySelector(".exp-header").setAttribute("aria-expanded", "false");
+      });
+      if (!isActive) {
+        item.classList.add("active");
+        item.querySelector(".exp-header").setAttribute("aria-expanded", "true");
+      }
+    });
   });
-  container.appendChild(h);
-  container.appendChild(ul);
 }
 
-/* About / Contact links */
-const aboutSectionInfo = [
-  { type: "Email", info: "shakilmsa@yahoo.com" },
-  { type: "LinkedIn", info: "https://www.linkedin.com/in/shakil-a-b2225418b/" }
-];
+function buildSkills() {
+  const grid = document.getElementById("skillsGrid");
+  if (!grid) return;
+  skills.forEach((s) => {
+    const card = document.createElement("div");
+    card.className = "glass skill-card";
+    card.textContent = s;
+    grid.appendChild(card);
+  });
+}
 
-// 1. The Global Helper Function
-window.showMobile = function(button, originalNumber, telLink) {
-  const container = document.getElementById("mobile-container");
-  if (container) {
-    container.innerHTML = `<a href="tel:${telLink}">${originalNumber}</a>`;
-  }
-};
+function buildStrengths() {
+  const grid = document.getElementById("strengthsGrid");
+  if (!grid) return;
+  Object.entries(strengths).forEach(([key, arr]) => {
+    const card = document.createElement("div");
+    card.className = "glass strength-card";
+    const title = key.charAt(0).toUpperCase() + key.slice(1) + " Strengths";
+    card.innerHTML = `<div class="strength-title">${title}</div><div class="typed-output" data-strings='${JSON.stringify(arr)}'></div>`;
+    grid.appendChild(card);
+  });
+}
 
-// 2. Your Main Builder Function
-function buildAboutLinks() {
-  const list = document.getElementById("aboutLinks");
+function buildProjects() {
+  const grid = document.getElementById("projectsGrid");
+  if (!grid) return;
+  projects.forEach((p) => {
+    const card = document.createElement("div");
+    card.className = "glass project-card";
+    card.innerHTML = `
+      <h3>${p.name}</h3>
+      <div class="project-meta">${p.duration} · ${p.for}</div>
+      <p>${p.desc}</p>
+      <div class="project-tags">${p.tags.map((t) => `<span class="project-tag">${t}</span>`).join("")}</div>`;
+    grid.appendChild(card);
+  });
+}
+
+function buildTrainings() {
+  const grid = document.getElementById("trainingsGrid");
+  if (!grid) return;
+  trainings.forEach((t) => {
+    const item = document.createElement("div");
+    item.className = "glass training-item";
+    item.textContent = t;
+    grid.appendChild(item);
+  });
+}
+
+function buildCerts() {
+  const grid = document.getElementById("certsGrid");
+  if (!grid) return;
+  certifications.forEach((c) => {
+    const card = document.createElement("div");
+    card.className = "glass cert-card";
+    card.innerHTML = `<h3>${c.title}</h3><p>${c.desc}</p>`;
+    grid.appendChild(card);
+  });
+}
+
+function buildCommunity() {
+  const list = document.getElementById("communityList");
   if (!list) return;
-  list.innerHTML = "";
-  
-  aboutSectionInfo.forEach((item) => {
+  community.forEach((c) => {
     const li = document.createElement("li");
-
-    if (item.type === "Email") {
-      li.innerHTML = `<strong>Email:</strong> <a href="mailto:${item.info}">${item.info}</a>`;
-    } 
-    else if (item.type === "Mobile") {
-      const tel = item.info.replace(/\s+/g, "").replace(/^0/, "+61");
-      const maskedInfo = item.info.substring(0, 4) + " xxx xxx";
-
-      li.innerHTML = `
-        <strong>Mobile:</strong> 
-        <span id="mobile-container">
-          <span id="masked-phone">${maskedInfo}</span>
-          <button onclick="showMobile(this, '${item.info}', '${tel}')" 
-                  style="margin-left:10px; cursor:pointer; font-size: 0.8em; padding: 2px 5px;">
-            Show Number
-          </button>
-        </span>`;
-    }
-    else if (item.type === "LinkedIn") {
-      li.innerHTML = `<strong>LinkedIn:</strong> <a href="${item.info}" target="_blank" rel="noopener noreferrer">LinkedIn Profile</a>`;
-    }
-
+    li.className = "glass";
+    li.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg><span>${c}</span>`;
     list.appendChild(li);
   });
 }
 
-// Call the function to run it
-buildAboutLinks();
+/* =====================================================
+   MELBOURNE TIME + WEATHER
+   ===================================================== */
+function startMelbourneClock() {
+  const timeEl = document.getElementById("melTime");
+  const dateEl = document.getElementById("melDate");
+  if (!timeEl || !dateEl) return;
+
+  const formatterTime = new Intl.DateTimeFormat("en-AU", {
+    timeZone: "Australia/Melbourne",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false
+  });
+
+  const formatterDate = new Intl.DateTimeFormat("en-AU", {
+    timeZone: "Australia/Melbourne",
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
+
+  function tick() {
+    const now = new Date();
+    timeEl.textContent = formatterTime.format(now);
+    dateEl.textContent = formatterDate.format(now);
+  }
+
+  tick();
+  setInterval(tick, 1000);
+}
+
+async function loadMelbourneWeather() {
+  const tempEl = document.getElementById("melTemp");
+  const descEl = document.getElementById("melDesc");
+  if (!tempEl || !descEl) return;
+
+  // Melbourne coordinates
+  const lat = -37.8136;
+  const lon = 144.9631;
+
+  try {
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&timezone=Australia%2FMelbourne`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error("Weather fetch failed");
+    const data = await res.json();
+
+    const temp = Math.round(data.current.temperature_2m);
+    const code = data.current.weather_code;
+
+    const weatherMap = {
+      0: "Clear sky",
+      1: "Mainly clear",
+      2: "Partly cloudy",
+      3: "Overcast",
+      45: "Foggy",
+      48: "Depositing rime fog",
+      51: "Light drizzle",
+      53: "Moderate drizzle",
+      55: "Dense drizzle",
+      61: "Slight rain",
+      63: "Moderate rain",
+      65: "Heavy rain",
+      71: "Slight snow",
+      73: "Moderate snow",
+      75: "Heavy snow",
+      80: "Slight showers",
+      81: "Moderate showers",
+      82: "Violent showers",
+      95: "Thunderstorm",
+      96: "Thunderstorm + hail",
+      99: "Thunderstorm + heavy hail"
+    };
+
+    tempEl.textContent = `${temp}°C`;
+    descEl.textContent = weatherMap[code] || "Unknown";
+  } catch (err) {
+    tempEl.textContent = "--°";
+    descEl.textContent = "Unavailable";
+    console.warn("Weather load failed:", err);
+  }
+}
+
+/* =====================================================
+   NAV + SMOOTH SCROLL
+   ===================================================== */
+function initNav() {
+  const toggle = document.getElementById("navToggle");
+  const links = document.getElementById("navLinks");
+  const navbar = document.getElementById("navbar");
+
+  if (toggle && links) {
+    toggle.addEventListener("click", () => {
+      const open = links.classList.toggle("open");
+      toggle.setAttribute("aria-expanded", open);
+    });
+
+    links.querySelectorAll("a").forEach((a) => {
+      a.addEventListener("click", () => {
+        links.classList.remove("open");
+        toggle.setAttribute("aria-expanded", "false");
+      });
+    });
+  }
+
+  // Scroll state
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (navbar) navbar.classList.toggle("scrolled", window.scrollY > 40);
+    },
+    { passive: true }
+  );
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach((link) => {
+    link.addEventListener("click", (e) => {
+      const id = link.getAttribute("href");
+      if (!id || id.length < 2) return;
+      const target = document.querySelector(id);
+      if (!target) return;
+      e.preventDefault();
+      const y = target.getBoundingClientRect().top + window.scrollY - 70;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    });
+  });
+}
+
+/* =====================================================
+   THREE.JS – BACKGROUND PARTICLES + HERO SHADER SPHERE
+   (matches the Electrician Pro reference style)
+   ===================================================== */
+async function initThree() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const THREE = await import("https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js");
+
+  /* ---------- Background starfield ---------- */
+  const bgCanvas = document.getElementById("webgl-bg");
+  if (bgCanvas) {
+    const bgRenderer = new THREE.WebGLRenderer({
+      canvas: bgCanvas,
+      alpha: true,
+      antialias: false,
+      powerPreference: "high-performance"
+    });
+    const bgScene = new THREE.Scene();
+    const bgCamera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.1, 100);
+    bgCamera.position.z = 7;
+    bgRenderer.setSize(innerWidth, innerHeight);
+    bgRenderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
+
+    const starCount = 900;
+    const starPos = new Float32Array(starCount * 3);
+    for (let i = 0; i < starCount; i++) {
+      starPos[i * 3] = (Math.random() - 0.5) * 40;
+      starPos[i * 3 + 1] = (Math.random() - 0.5) * 25;
+      starPos[i * 3 + 2] = (Math.random() - 0.5) * 20;
+    }
+    const starGeom = new THREE.BufferGeometry();
+    starGeom.setAttribute("position", new THREE.BufferAttribute(starPos, 3));
+    const starMat = new THREE.PointsMaterial({
+      size: 0.04,
+      transparent: true,
+      opacity: 0.75,
+      color: 0x22d3ee,
+      depthWrite: false
+    });
+    const stars = new THREE.Points(starGeom, starMat);
+    bgScene.add(stars);
+
+    function bgTick() {
+      stars.rotation.y += 0.00055;
+      bgRenderer.render(bgScene, bgCamera);
+      requestAnimationFrame(bgTick);
+    }
+    bgTick();
+
+    window.addEventListener(
+      "resize",
+      () => {
+        bgCamera.aspect = innerWidth / innerHeight;
+        bgCamera.updateProjectionMatrix();
+        bgRenderer.setSize(innerWidth, innerHeight);
+        bgRenderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
+      },
+      { passive: true }
+    );
+  }
+
+  /* ---------- Hero shader sphere (the “globe”) ---------- */
+  const heroCanvas = document.getElementById("webgl-hero");
+  if (!heroCanvas) return;
+
+  // Skip heavy sphere on very small screens for performance
+  if (window.innerWidth < 640) {
+    heroCanvas.style.display = "none";
+    return;
+  }
+
+  const heroRenderer = new THREE.WebGLRenderer({
+    canvas: heroCanvas,
+    alpha: true,
+    antialias: true,
+    powerPreference: "high-performance"
+  });
+  const heroScene = new THREE.Scene();
+  const heroCamera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.1, 100);
+  heroCamera.position.set(0, 0, 4);
+  heroRenderer.setSize(innerWidth, innerHeight);
+  heroRenderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
+
+  // Exact-style shaders from the reference template
+  const vertexShader = `
+    varying vec2 vUv;
+    varying vec3 vNormal;
+    void main() {
+      vUv = uv;
+      vNormal = normal;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }
+  `;
+
+  const fragmentShader = `
+    precision highp float;
+    varying vec2 vUv;
+    varying vec3 vNormal;
+    uniform float time;
+
+    vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+    vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+    vec3 permute(vec3 x) { return mod289(((x * 34.0) + 1.0) * x); }
+
+    float snoise(vec2 v) {
+      const vec4 C = vec4(0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439);
+      vec2 i = floor(v + dot(v, C.yy));
+      vec2 x0 = v - i + dot(i, C.xx);
+      vec2 i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+      vec4 x12 = x0.xyxy + C.xxzz;
+      x12.xy -= i1;
+      i = mod289(i);
+      vec3 p = permute(permute(i.y + vec3(0.0, i1.y, 1.0)) + i.x + vec3(0.0, i1.x, 1.0));
+      vec3 m = max(0.5 - vec3(dot(x0, x0), dot(x12.xy, x12.xy), dot(x12.zw, x12.zw)), 0.0);
+      m = m * m;
+      m = m * m;
+      vec3 x = 2.0 * fract(p * C.www) - 1.0;
+      vec3 h = abs(x) - 0.5;
+      vec3 ox = floor(x + 0.5);
+      vec3 a0 = x - ox;
+      m *= 1.79284291400159 - 0.85373472095314 * (a0 * a0 + h * h);
+      vec3 g;
+      g.x = a0.x * x0.x + h.x * x0.y;
+      g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+      return 130.0 * dot(m, g);
+    }
+
+    void main() {
+      // Cyan → indigo palette to match the enterprise theme
+      vec3 base = mix(vec3(0.05, 0.75, 0.85), vec3(0.45, 0.35, 0.95), vUv.y);
+      float n = snoise(vUv * 5.0 + vec2(time * 0.45, time * 0.7));
+      float light = dot(normalize(vNormal), vec3(0.0, 0.15, 1.0));
+      light = smoothstep(0.0, 1.0, light);
+      vec3 color = (base + n * 0.22) * light;
+      gl_FragColor = vec4(color, 1.0);
+    }
+  `;
+
+  const uniforms = { time: { value: 0 } };
+  const sphere = new THREE.Mesh(
+    new THREE.SphereGeometry(1.25, 96, 96),
+    new THREE.ShaderMaterial({
+      vertexShader,
+      fragmentShader,
+      uniforms,
+      side: THREE.DoubleSide
+    })
+  );
+  heroScene.add(sphere);
+
+  const clock = new THREE.Clock();
+
+  function heroTick() {
+    uniforms.time.value = clock.getElapsedTime();
+    sphere.rotation.y += 0.0022;
+    sphere.rotation.x = Math.sin(clock.getElapsedTime() * 0.15) * 0.08;
+    heroRenderer.render(heroScene, heroCamera);
+    requestAnimationFrame(heroTick);
+  }
+  heroTick();
+  heroCanvas.classList.add("ready");
+
+  // Scroll-linked motion (subtle)
+  let scrollY = 0;
+  window.addEventListener(
+    "scroll",
+    () => {
+      scrollY = window.scrollY;
+    },
+    { passive: true }
+  );
+
+  // Optional subtle parallax via RAF
+  function parallaxLoop() {
+    const progress = Math.min(scrollY / (document.body.scrollHeight * 0.35), 1);
+    sphere.position.y = progress * 0.9;
+    sphere.scale.setScalar(1 + progress * 0.35);
+    requestAnimationFrame(parallaxLoop);
+  }
+  parallaxLoop();
+
+  window.addEventListener(
+    "resize",
+    () => {
+      heroCamera.aspect = innerWidth / innerHeight;
+      heroCamera.updateProjectionMatrix();
+      heroRenderer.setSize(innerWidth, innerHeight);
+      heroRenderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
+    },
+    { passive: true }
+  );
+}
+
+/* =====================================================
+   GSAP + TYPED (loaded dynamically after paint)
+   ===================================================== */
+async function initAnimations() {
+  // Load Typed.js
+  await loadScript("https://cdn.jsdelivr.net/npm/typed.js@2.0.16/dist/typed.umd.js");
+
+  if (window.Typed) {
+    new Typed("#typed-roles", {
+      strings: [
+        "Senior Systems Engineer",
+        "Hybrid Infrastructure & Cloud Administration",
+        "Azure & Microsoft 365 Engineer",
+        "Network & Virtualization Specialist"
+      ],
+      typeSpeed: 42,
+      backSpeed: 28,
+      backDelay: 1400,
+      loop: true,
+      showCursor: true
+    });
+
+    document.querySelectorAll(".typed-output").forEach((el) => {
+      const strings = JSON.parse(el.dataset.strings);
+      new Typed(el, {
+        strings,
+        typeSpeed: 36,
+        backSpeed: 26,
+        backDelay: 1100,
+        startDelay: 400,
+        loop: true,
+        showCursor: true
+      });
+    });
+  }
+
+  // Load GSAP + ScrollTrigger
+  await loadScript("https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js");
+  await loadScript("https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js");
+
+  if (!window.gsap || !window.ScrollTrigger) return;
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Hero entrance
+  gsap.from(".hero-kicker, .hero h1, .hero-lead, .hero-typed, .btn-row, .melbourne-widget, .hero-card", {
+    y: 24,
+    opacity: 0,
+    duration: 0.6,
+    stagger: 0.07,
+    ease: "power2.out",
+    delay: 0.12
+  });
+
+  // Section titles
+  gsap.utils.toArray(".section-title").forEach((el) => {
+    gsap.from(el, {
+      scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none none" },
+      y: 22,
+      opacity: 0,
+      duration: 0.5,
+      ease: "power2.out"
+    });
+  });
+
+  // Cards
+  gsap.utils.toArray(".skill-card, .project-card, .training-item, .cert-card, .strength-card, .community-list li, .exp-item").forEach((el) => {
+    gsap.from(el, {
+      scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none none" },
+      y: 26,
+      opacity: 0,
+      duration: 0.48,
+      ease: "power2.out"
+    });
+  });
+}
+
+function loadScript(src) {
+  return new Promise((resolve, reject) => {
+    if (document.querySelector(`script[src="${src}"]`)) {
+      resolve();
+      return;
+    }
+    const s = document.createElement("script");
+    s.src = src;
+    s.async = true;
+    s.onload = resolve;
+    s.onerror = reject;
+    document.head.appendChild(s);
+  });
+}
+
+/* =====================================================
+   BOOT
+   ===================================================== */
+document.addEventListener("DOMContentLoaded", () => {
+  // 1. Content (instant)
+  buildExperience();
+  buildSkills();
+  buildStrengths();
+  buildProjects();
+  buildTrainings();
+  buildCerts();
+  buildCommunity();
+
+  // 2. Nav + clock
+  initNav();
+  startMelbourneClock();
+  loadMelbourneWeather();
+
+  // 3. Heavy visual work after first paint
+  const schedule = (fn) => {
+    if ("requestIdleCallback" in window) {
+      requestIdleCallback(fn, { timeout: 1600 });
+    } else {
+      setTimeout(fn, 400);
+    }
+  };
+
+  schedule(() => {
+    initThree().catch((e) => console.warn("Three.js init failed:", e));
+    initAnimations().catch((e) => console.warn("Animations init failed:", e));
+  });
+});
