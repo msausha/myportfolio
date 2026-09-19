@@ -335,74 +335,51 @@ async function loadMelbourneWeather() {
 /* =====================================================
    LIVE TECH PULSE (Hacker News – free, no key)
    ===================================================== */
+
 async function loadTechPulse() {
   const track = document.getElementById("techPulseTrack");
   if (!track) return;
 
-  // Relevance-focused queries for a Systems / Azure engineer
-  const queries = [
-    "Azure cloud",
-    "Microsoft 365 OR Intune",
-    "hybrid cloud",
-    "PowerShell",
-    "VMware OR Hyper-V",
-    "cybersecurity",
-    "DevOps automation",
-    "Virtualization OR VMware OR Hyper-V",
-    "Azure cloud",
-    "Microsoft 365",
-    "MFA OR Conditional Access",
-    "networking OR routing OR firewall",
-    "PowerShell OR scripting",
-    "cloud infrastructure",
-    "ITIL OR IT service management"
-  ];
+  // Pointing directly to your deployed Render backend
+  const API_URL = "https://syncline-news-backend.onrender.com/api/news";
 
   try {
-    // Fetch a few filtered searches in parallel, then merge unique stories
-    const results = await Promise.all(
-      queries.map((q) =>
-        fetch(
-          `https://hn.algolia.com/api/v1/search?query=${encodeURIComponent(q)}&tags=story&hitsPerPage=6`
-        ).then((r) => (r.ok ? r.json() : { hits: [] }))
-      )
-    );
+    const response = await fetch(API_URL);
+    const data = await response.json();
 
-    const seen = new Set();
-    const items = [];
-
-    results.forEach((data) => {
-      (data.hits || []).forEach((hit) => {
-        if (!hit.title || seen.has(hit.objectID)) return;
-        seen.add(hit.objectID);
-        const url = hit.url || `https://news.ycombinator.com/item?id=${hit.objectID}`;
-        items.push({ title: hit.title, url, points: hit.points || 0 });
-      });
-    });
-
-    // Prefer higher-signal stories, keep a manageable set
-    items.sort((a, b) => b.points - a.points);
-    const top = items.slice(0, 12);
-
-    if (top.length === 0) {
-      track.innerHTML = `<span class="tp-loading">No headlines right now</span>`;
+    if (!data.success || !data.items || data.items.length === 0) {
+      track.innerHTML = `<span class="tp-loading">Headlines unavailable</span>`;
       return;
     }
 
-    // Duplicate list for seamless infinite scroll
+    const items = data.items.map((item) => {
+      if (typeof item === 'string') {
+        return {
+          title: item,
+          url: "https://syncline.com.au",
+          source: "NEWS"
+        };
+      }
+      return {
+        title: item.title,
+        url: item.link || "https://syncline.com.au",
+        source: (item.category || "TECH").toUpperCase()
+      };
+    });
+
     const renderItems = (list) =>
       list
         .map(
           (item) =>
             `<a class="tp-item" href="${item.url}" target="_blank" rel="noopener noreferrer">
-              <span class="tp-source">HN</span>
+              <span class="tp-source">${item.source}</span>
               <span>${item.title}</span>
             </a>`
         )
         .join("");
 
-    track.innerHTML = renderItems(top) + renderItems(top);
-    // Start animation after layout
+    track.innerHTML = renderItems(items) + renderItems(items);
+
     requestAnimationFrame(() => {
       track.classList.add("animating");
     });
@@ -411,6 +388,8 @@ async function loadTechPulse() {
     track.innerHTML = `<span class="tp-loading">Headlines unavailable</span>`;
   }
 }
+
+
 
 /* =====================================================
    NAV + SMOOTH SCROLL
