@@ -492,6 +492,9 @@ async function loadMelbourneWeather() {
 /* =====================================================
    LIVE TECH PULSE
    ===================================================== */
+/* =====================================================
+   LIVE TECH PULSE (Fixed & Bulletproof)
+   ===================================================== */
 async function loadTechPulse() {
   const track = document.getElementById("techPulseTrack");
   if (!track) return;
@@ -507,18 +510,41 @@ async function loadTechPulse() {
       return;
     }
 
-    const items = data.items.map((item) => ({
-      title: item.title,
-      url: item.link || "https://syncline.com.au",
-      source: (item.category || "TECH").toUpperCase()
-    }));
+    const items = data.items.map((item) => {
+      if (typeof item === 'string') {
+        return {
+          title: item,
+          url: "https://syncline.com.au",
+          source: "TECH"
+        };
+      }
+      // Safely fallback category/source to "TECH" if undefined or null
+      const rawSource = item.category || item.source || "TECH";
+      return {
+        title: item.title || "Tech Update",
+        url: item.link || item.url || "https://syncline.com.au",
+        source: String(rawSource).toUpperCase()
+      };
+    });
 
     const renderItems = (list) =>
-      list.map((item) => `<a class="tp-item" href="${item.url}" target="_blank" rel="noopener noreferrer"><span class="tp-source">${item.source}</span><span>${item.title}</span></a>`).join("");
+      list
+        .map(
+          (item) =>
+            `<a class="tp-item" href="${item.url}" target="_blank" rel="noopener noreferrer">
+              <span class="tp-source">${item.source}</span>
+              <span>${item.title}</span>
+            </a>`
+        )
+        .join("");
 
     track.innerHTML = renderItems(items) + renderItems(items);
-    requestAnimationFrame(() => track.classList.add("animating"));
+
+    requestAnimationFrame(() => {
+      track.classList.add("animating");
+    });
   } catch (err) {
+    console.warn("Tech pulse failed:", err);
     track.innerHTML = `<span class="tp-loading">Headlines unavailable</span>`;
   }
 }
