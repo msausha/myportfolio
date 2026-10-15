@@ -1,6 +1,7 @@
 /**
  * Shakil Ahmed – Portfolio
- * Enterprise-grade · Fast · Separate modules
+ * Enterprise-grade · Dual-pillar (Cloud & Systems + AI & RAG)
+ * Fast · Separate modules · Production-ready
  */
 
 /* =====================================================
@@ -11,7 +12,7 @@ const experiences = [
     title: "Senior Systems Engineer",
     company: "Greenlight Australia",
     location: "Melbourne, VIC",
-    duration: "August 2024 – Present",
+    duration: "August 2024 – August 2026",
     details: [
       "Hold primary responsibility for the ongoing L2/L3 support and administration of a geographically dispersed hybrid cloud infrastructure.",
       "Provide key technical leadership for major infrastructure rollouts and platform upgrades, managing project scope and execution.",
@@ -66,64 +67,87 @@ const skills = [
   "Automation & Scripting: PowerShell, Bash, Python, Workflow Automation, Diagnostics Automation",
   "Infrastructure & Systems: Windows Server, Linux Administration, VMware, Hyper-V, Patch Management",
   "Networking: Routing & Switching, VLAN, VPN, Firewall Management, TCP/IP Fundamentals",
-  "DevOps & Integration: Git, GitHub, CI/CD Basics, API Integration, JSON, Monitoring & RCA",
-  "AI & Automation: AI Agent Workflows, Ticket Triage Automation, Data Processing Integrations"
+  "DevOps & Integration: Git, GitHub, Git LFS, CI/CD Basics, API Integration, JSON, Monitoring & RCA",
+  "AI & Automation: Multi-Agent Systems, RAG Pipelines, Vector Search, LLM APIs (Gemini), n8n Orchestration, Ticket & Email Intelligence"
 ];
 
 const strengths = {
   professional: ["Project Management", "Team Collaboration", "Client Engagement", "Problem-Solving", "Leadership", "Business Strategy", "Time Management"],
-  technical: ["Microsoft 365 Administration", "Azure Cloud Administration", "IT Service Management (ITIL)", "Full-Stack Web Development", "Cloud Infrastructure & Virtualization", "Database Design & Management", "Version Control & CI/CD", "RESTful API Development", "Automation & Scripting", "Cybersecurity & Compliance"],
+  technical: ["Microsoft 365 & Azure Administration", "Multi-Agent AI Systems & RAG", "Cloud Infrastructure & Virtualization", "Automation, n8n & Python Scripting", "Version Control & Git LFS", "RESTful API & LLM Integration", "Cybersecurity & Compliance"],
   personal: ["Adaptability", "Continuous Learning", "Attention to Detail", "Communication Skills", "Critical Thinking", "Empathy", "Time Management", "Creativity"]
 };
 
 const projects = [
   {
+    name: "AI Foundry – Multi-Agent Ticketing System",
+    duration: "2026",
+    for: "Enterprise AI Platform",
+    desc: "Complete agentic ticketing system built in AI Foundry with four specialised agents. Three collaborative agents analyse incidents, identify root causes, retrieve historical matches from prior tickets, and cross-check against backend systems plus live internet sources. The fourth agent synthesises full analytics, recommended actions and priority scoring for rapid resolution.",
+    tags: ["AI Foundry", "Multi-Agent", "RAG", "Root Cause Analysis", "Analytics", "Python"],
+    track: "ai"
+  },
+  {
+    name: "Intelligent Email Aggregator & Analyst",
+    duration: "Current Project",
+    for: "Productivity Automation",
+    desc: "n8n multi-node workflow that aggregates emails from multiple sources, performs deep analysis, shortlists high-value messages, and hands off to Gemini LLM. The LLM produces a polished daily brief containing category, importance, priority ranking, concise summary and clear CTAs — runnable on schedule or manual trigger — dramatically reducing inbox processing time.",
+    tags: ["n8n", "Gemini LLM", "Email Intelligence", "Workflow Automation", "Priority Scoring", "CTA Generation"],
+    track: "ai"
+  },
+  {
+    name: "Bunnings AI Agent (RAG & Retail Automation)",
+    duration: "2026",
+    for: "AI Portfolio Demonstration",
+    desc: "Built a domain-specific conversational AI agent utilizing Retrieval-Augmented Generation (RAG) and vector search for automated product querying, customer assistance, and multi-layer workflow execution.",
+    tags: ["Python", "RAG", "Vector Search", "Google Colab", "Git LFS", "LLM API"],
+    track: "ai"
+  },
+  {
     name: "Azure Hybrid Infrastructure – Hub & Spoke Deployment",
     duration: "Ongoing",
     for: "Enterprise Infrastructure",
     desc: "Designed and supported hybrid cloud infrastructure using Azure Hub-and-Spoke, VPN gateways, routing, NSGs, and security hardening.",
-    tags: ["Azure VNet", "Hub & Spoke", "NSG", "UDR", "VPN Gateway", "Azure Firewall", "PowerShell"]
+    tags: ["Azure VNet", "Hub & Spoke", "NSG", "UDR", "VPN Gateway", "Azure Firewall", "PowerShell"],
+    track: "cloud"
   },
   {
     name: "Azure AD + Microsoft 365 Application Integration",
     duration: "Ongoing",
     for: "Identity & Access Management",
     desc: "Integrated external applications with Azure AD using OAuth and SSO, configured Conditional Access, MFA, and identity governance.",
-    tags: ["Azure AD", "OAuth", "SSO", "Conditional Access", "MFA", "PowerShell"]
+    tags: ["Azure AD", "OAuth", "SSO", "Conditional Access", "MFA", "PowerShell"],
+    track: "cloud"
   },
   {
     name: "SharePoint + Power Automate Workflow Automation",
     duration: "Ongoing",
     for: "Business Process Automation",
     desc: "Built automated workflows for approvals, notifications, and document processing using Power Automate and SharePoint.",
-    tags: ["SharePoint Online", "Power Automate", "M365", "JSON", "Automation"]
+    tags: ["SharePoint Online", "Power Automate", "M365", "JSON", "Automation"],
+    track: "cloud"
   },
   {
-    name: "Azure App Service Deployment & M365 Monitoring",
-    duration: "Ongoing",
-    for: "Internal Applications",
-    desc: "Deployed applications to Azure App Service with diagnostics, monitoring, and automated notifications to Microsoft Teams.",
-    tags: ["Azure App Service", "App Insights", "Log Analytics", "Teams Webhooks", "PowerShell"]
-  },
-  {
-    name: "AI Agent for Ticket Triage & Aged Care Triage",
+    name: "AI Agent for Ticket Triage & Workflow Automation",
     duration: "Current Project",
     for: "Internal AI Automation",
-    desc: "Building an AI agent to classify, triage, and route support tickets and aged care assessments using workflow automation.",
-    tags: ["AI Agent", "Prompt Engineering", "Automation", "API Integration"]
+    desc: "Building and deploying AI agents to classify, triage, and route support tickets and administrative assessments using workflow tools and Microsoft Graph API.",
+    tags: ["AI Agent", "n8n", "Microsoft Graph", "Python", "API Integration"],
+    track: "ai"
   },
   {
     name: "ReactJS & Node.js Admin Panel",
     duration: "1 month",
-    for: "E-Commerce Owners",
+    for: "Full-Stack Web Development",
     desc: "Created an admin panel with backend integration, charts, and inventory management.",
-    tags: ["JavaScript", "Node.js", "Express.js", "MongoDB", "Chart.js"]
+    tags: ["JavaScript", "Node.js", "Express.js", "MongoDB", "Chart.js"],
+    track: "cloud"
   }
 ];
 
 const trainings = [
   "Azure Fundamentals", "Office 365 Admin", "PowerShell Automation", "ITIL Foundations",
-  "Windows Server Administration", "Linux for Admins", "Cybersecurity Essentials", "Monitoring & Incident Response"
+  "Windows Server Administration", "Linux for Admins", "Cybersecurity Essentials",
+  "AI & RAG Pipeline Architecture", "Multi-Agent Systems Design", "n8n Advanced Workflows"
 ];
 
 const certifications = [
@@ -138,6 +162,46 @@ const community = [
   "Participated in design/code review sessions in cross-functional teams.",
   "Shared knowledge through collaborative issue-solving and tech strategy discussions."
 ];
+
+/* Dual-track content maps */
+const trackContent = {
+  cloud: {
+    kicker: "Senior Systems Engineer",
+    lead: "Hybrid enterprise infrastructure specialist driving efficiency through Azure, Microsoft 365, virtualization and large-scale automation.",
+    roles: [
+      "Senior Systems Engineer",
+      "Hybrid Infrastructure & Cloud Administration",
+      "Azure & Microsoft 365 Engineer",
+      "Enterprise Networking Specialist"
+    ],
+    cardTitle: "Key Technical Domains",
+    cardItems: [
+      "Azure, Microsoft 365, Intune, AD Federation",
+      "Windows Server, Linux, VMware, Hyper-V",
+      "Automation & Infrastructure Scripting",
+      "Core Routing & Switching, Firewall Management",
+      "ServiceNow, SCCM, ITIL Process"
+    ]
+  },
+  ai: {
+    kicker: "AI & Multi-Agent Engineering",
+    lead: "Designing and orchestrating production multi-agent systems, RAG pipelines and intelligent automation that turn complex tickets, emails and knowledge into actionable insight and measurable time savings.",
+    roles: [
+      "Multi-Agent Systems Architect",
+      "RAG & Vector Search Specialist",
+      "AI Foundry & Autonomous Agents",
+      "Email Intelligence & LLM Orchestration"
+    ],
+    cardTitle: "AI Engineering Focus",
+    cardItems: [
+      "AI Foundry Multi-Agent Ticketing (4-Agent Pipeline)",
+      "Intelligent Email Aggregator + Gemini Briefing",
+      "RAG Pipelines, Vector Search & Historical Matching",
+      "n8n Orchestration · Root-Cause & Analytics Agents",
+      "Python · Gemini · Microsoft Graph · Git LFS"
+    ]
+  }
+};
 
 /* =====================================================
    CONTENT BUILDERS (no external deps – runs immediately)
@@ -205,6 +269,7 @@ function buildProjects() {
   projects.forEach((p) => {
     const card = document.createElement("div");
     card.className = "glass project-card";
+    card.dataset.track = p.track || "cloud";
     card.innerHTML = `
       <h3>${p.name}</h3>
       <div class="project-meta">${p.duration} · ${p.for}</div>
@@ -248,6 +313,118 @@ function buildCommunity() {
 }
 
 /* =====================================================
+   DUAL-TRACK SPECIALTY SWITCHER
+   ===================================================== */
+let typedInstance = null;
+let currentTrack = "cloud";
+
+function updateHeroForTrack(track) {
+  const content = trackContent[track];
+  if (!content) return;
+
+  currentTrack = track;
+
+  // Buttons
+  document.querySelectorAll(".track-btn").forEach((btn) => {
+    const isActive = btn.dataset.track === track;
+    btn.classList.toggle("active", isActive);
+    btn.setAttribute("aria-pressed", isActive ? "true" : "false");
+  });
+
+  // Kicker
+  const kickerText = document.getElementById("kickerText");
+  if (kickerText) kickerText.textContent = content.kicker;
+
+  // Lead
+  const lead = document.getElementById("heroLead");
+  if (lead) {
+    lead.style.opacity = "0";
+    setTimeout(() => {
+      lead.textContent = content.lead;
+      lead.style.opacity = "1";
+    }, 180);
+  }
+
+  // Typed roles
+  if (window.Typed && typedInstance) {
+    typedInstance.destroy();
+  }
+  const typedEl = document.getElementById("typed-roles");
+  if (typedEl && window.Typed) {
+    typedEl.innerHTML = "";
+    typedInstance = new Typed("#typed-roles", {
+      strings: content.roles,
+      typeSpeed: 42,
+      backSpeed: 28,
+      backDelay: 1400,
+      loop: true,
+      showCursor: true
+    });
+  }
+
+  // Hero card content
+  const cardTitle = document.getElementById("heroCardTitle");
+  const cardList = document.getElementById("heroCardList");
+  if (cardTitle) cardTitle.textContent = content.cardTitle;
+  if (cardList) {
+    cardList.innerHTML = content.cardItems.map((item) => `
+      <li>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        ${item}
+      </li>`).join("");
+  }
+
+  // Highlight matching projects
+  document.querySelectorAll(".project-card").forEach((card) => {
+    const matches = card.dataset.track === track;
+    card.classList.toggle("highlight", matches);
+  });
+}
+
+function initTrackSwitcher() {
+  document.querySelectorAll(".track-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const track = btn.dataset.track;
+      if (track && track !== currentTrack) {
+        updateHeroForTrack(track);
+      }
+    });
+  });
+}
+
+/* =====================================================
+   LIVE TELEMETRY SIMULATION
+   ===================================================== */
+function startTelemetry() {
+  const uptimeEl = document.getElementById("azureUptime");
+  const syncStatus = document.getElementById("aiSyncStatus");
+  const syncMeta = document.getElementById("aiSyncMeta");
+  if (!uptimeEl || !syncStatus || !syncMeta) return;
+
+  // Simulate tiny uptime fluctuations around 99.98%
+  let baseUptime = 99.98;
+  setInterval(() => {
+    const variance = (Math.random() - 0.5) * 0.004;
+    const val = Math.min(100, Math.max(99.95, baseUptime + variance)).toFixed(2);
+    uptimeEl.textContent = `${val}%`;
+  }, 4500);
+
+  // Simulate AI Foundry multi-agent status
+  let minutesAgo = 2;
+  const statuses = ["Active", "Analysing", "Active", "Syncing"];
+  let statusIdx = 0;
+
+  setInterval(() => {
+    minutesAgo = Math.max(1, minutesAgo + Math.floor(Math.random() * 3) - 1);
+    if (Math.random() > 0.65) {
+      statusIdx = (statusIdx + 1) % statuses.length;
+    }
+    syncStatus.textContent = statuses[statusIdx];
+    syncMeta.textContent = `4 agents · synced ${minutesAgo}m ago`;
+  }, 8000);
+}
+
+/* =====================================================
    MELBOURNE TIME + WEATHER
    ===================================================== */
 function startMelbourneClock() {
@@ -286,7 +463,6 @@ async function loadMelbourneWeather() {
   const descEl = document.getElementById("melDesc");
   if (!tempEl || !descEl) return;
 
-  // Melbourne coordinates
   const lat = -37.8136;
   const lon = 144.9631;
 
@@ -300,47 +476,26 @@ async function loadMelbourneWeather() {
     const code = data.current.weather_code;
 
     const weatherMap = {
-      0: "Clear sky",
-      1: "Mainly clear",
-      2: "Partly cloudy",
-      3: "Overcast",
-      45: "Foggy",
-      48: "Depositing rime fog",
-      51: "Light drizzle",
-      53: "Moderate drizzle",
-      55: "Dense drizzle",
-      61: "Slight rain",
-      63: "Moderate rain",
-      65: "Heavy rain",
-      71: "Slight snow",
-      73: "Moderate snow",
-      75: "Heavy snow",
-      80: "Slight showers",
-      81: "Moderate showers",
-      82: "Violent showers",
-      95: "Thunderstorm",
-      96: "Thunderstorm + hail",
-      99: "Thunderstorm + heavy hail"
+      0: "Clear sky", 1: "Mainly clear", 2: "Partly cloudy", 3: "Overcast",
+      45: "Foggy", 51: "Light drizzle", 61: "Slight rain", 63: "Moderate rain",
+      71: "Slight snow", 80: "Slight showers", 95: "Thunderstorm"
     };
 
     tempEl.textContent = `${temp}°C`;
-    descEl.textContent = weatherMap[code] || "Unknown";
+    descEl.textContent = weatherMap[code] || "Clear";
   } catch (err) {
     tempEl.textContent = "--°";
     descEl.textContent = "Unavailable";
-    console.warn("Weather load failed:", err);
   }
 }
 
 /* =====================================================
-   LIVE TECH PULSE (Hacker News – free, no key)
+   LIVE TECH PULSE
    ===================================================== */
-
 async function loadTechPulse() {
   const track = document.getElementById("techPulseTrack");
   if (!track) return;
 
-  // Pointing directly to your deployed Render backend
   const API_URL = "https://syncline-news-backend.onrender.com/api/news";
 
   try {
@@ -352,44 +507,21 @@ async function loadTechPulse() {
       return;
     }
 
-    const items = data.items.map((item) => {
-      if (typeof item === 'string') {
-        return {
-          title: item,
-          url: "https://syncline.com.au",
-          source: "NEWS"
-        };
-      }
-      return {
-        title: item.title,
-        url: item.link || "https://syncline.com.au",
-        source: (item.category || "TECH").toUpperCase()
-      };
-    });
+    const items = data.items.map((item) => ({
+      title: item.title,
+      url: item.link || "https://syncline.com.au",
+      source: (item.category || "TECH").toUpperCase()
+    }));
 
     const renderItems = (list) =>
-      list
-        .map(
-          (item) =>
-            `<a class="tp-item" href="${item.url}" target="_blank" rel="noopener noreferrer">
-              <span class="tp-source">${item.source}</span>
-              <span>${item.title}</span>
-            </a>`
-        )
-        .join("");
+      list.map((item) => `<a class="tp-item" href="${item.url}" target="_blank" rel="noopener noreferrer"><span class="tp-source">${item.source}</span><span>${item.title}</span></a>`).join("");
 
     track.innerHTML = renderItems(items) + renderItems(items);
-
-    requestAnimationFrame(() => {
-      track.classList.add("animating");
-    });
+    requestAnimationFrame(() => track.classList.add("animating"));
   } catch (err) {
-    console.warn("Tech pulse failed:", err);
     track.innerHTML = `<span class="tp-loading">Headlines unavailable</span>`;
   }
 }
-
-
 
 /* =====================================================
    NAV + SMOOTH SCROLL
@@ -413,16 +545,10 @@ function initNav() {
     });
   }
 
-  // Scroll state
-  window.addEventListener(
-    "scroll",
-    () => {
-      if (navbar) navbar.classList.toggle("scrolled", window.scrollY > 40);
-    },
-    { passive: true }
-  );
+  window.addEventListener("scroll", () => {
+    if (navbar) navbar.classList.toggle("scrolled", window.scrollY > 40);
+  }, { passive: true });
 
-  // Smooth scroll
   document.querySelectorAll('a[href^="#"]').forEach((link) => {
     link.addEventListener("click", (e) => {
       const id = link.getAttribute("href");
@@ -437,23 +563,15 @@ function initNav() {
 }
 
 /* =====================================================
-   THREE.JS – BACKGROUND PARTICLES + HERO SHADER SPHERE
-   (matches the Electrician Pro reference style)
+   THREE.JS BACKGROUND & SHADER SPHERE
    ===================================================== */
 async function initThree() {
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
   const THREE = await import("https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js");
 
-  /* ---------- Background starfield ---------- */
   const bgCanvas = document.getElementById("webgl-bg");
   if (bgCanvas) {
-    const bgRenderer = new THREE.WebGLRenderer({
-      canvas: bgCanvas,
-      alpha: true,
-      antialias: false,
-      powerPreference: "high-performance"
-    });
+    const bgRenderer = new THREE.WebGLRenderer({ canvas: bgCanvas, alpha: true, antialias: false, powerPreference: "high-performance" });
     const bgScene = new THREE.Scene();
     const bgCamera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.1, 100);
     bgCamera.position.z = 7;
@@ -469,14 +587,7 @@ async function initThree() {
     }
     const starGeom = new THREE.BufferGeometry();
     starGeom.setAttribute("position", new THREE.BufferAttribute(starPos, 3));
-    const starMat = new THREE.PointsMaterial({
-      size: 0.04,
-      transparent: true,
-      opacity: 0.75,
-      color: 0x22d3ee,
-      depthWrite: false
-    });
-    const stars = new THREE.Points(starGeom, starMat);
+    const stars = new THREE.Points(starGeom, new THREE.PointsMaterial({ size: 0.04, transparent: true, opacity: 0.75, color: 0x22d3ee, depthWrite: false }));
     bgScene.add(stars);
 
     function bgTick() {
@@ -486,41 +597,24 @@ async function initThree() {
     }
     bgTick();
 
-    window.addEventListener(
-      "resize",
-      () => {
-        bgCamera.aspect = innerWidth / innerHeight;
-        bgCamera.updateProjectionMatrix();
-        bgRenderer.setSize(innerWidth, innerHeight);
-        bgRenderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
-      },
-      { passive: true }
-    );
+    window.addEventListener("resize", () => {
+      bgCamera.aspect = innerWidth / innerHeight;
+      bgCamera.updateProjectionMatrix();
+      bgRenderer.setSize(innerWidth, innerHeight);
+      bgRenderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
+    }, { passive: true });
   }
 
-  /* ---------- Hero shader sphere (the “globe”) ---------- */
   const heroCanvas = document.getElementById("webgl-hero");
-  if (!heroCanvas) return;
+  if (!heroCanvas || window.innerWidth < 640) return;
 
-  // Skip heavy sphere on very small screens for performance
-  if (window.innerWidth < 640) {
-    heroCanvas.style.display = "none";
-    return;
-  }
-
-  const heroRenderer = new THREE.WebGLRenderer({
-    canvas: heroCanvas,
-    alpha: true,
-    antialias: true,
-    powerPreference: "high-performance"
-  });
+  const heroRenderer = new THREE.WebGLRenderer({ canvas: heroCanvas, alpha: true, antialias: true, powerPreference: "high-performance" });
   const heroScene = new THREE.Scene();
   const heroCamera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.1, 100);
   heroCamera.position.set(0, 0, 4);
   heroRenderer.setSize(innerWidth, innerHeight);
   heroRenderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
 
-  // Exact-style shaders from the reference template
   const vertexShader = `
     varying vec2 vUv;
     varying vec3 vNormal;
@@ -536,11 +630,9 @@ async function initThree() {
     varying vec2 vUv;
     varying vec3 vNormal;
     uniform float time;
-
     vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
     vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
     vec3 permute(vec3 x) { return mod289(((x * 34.0) + 1.0) * x); }
-
     float snoise(vec2 v) {
       const vec4 C = vec4(0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439);
       vec2 i = floor(v + dot(v, C.yy));
@@ -551,44 +643,28 @@ async function initThree() {
       i = mod289(i);
       vec3 p = permute(permute(i.y + vec3(0.0, i1.y, 1.0)) + i.x + vec3(0.0, i1.x, 1.0));
       vec3 m = max(0.5 - vec3(dot(x0, x0), dot(x12.xy, x12.xy), dot(x12.zw, x12.zw)), 0.0);
-      m = m * m;
-      m = m * m;
+      m = m * m; m = m * m;
       vec3 x = 2.0 * fract(p * C.www) - 1.0;
       vec3 h = abs(x) - 0.5;
       vec3 ox = floor(x + 0.5);
       vec3 a0 = x - ox;
       m *= 1.79284291400159 - 0.85373472095314 * (a0 * a0 + h * h);
-      vec3 g;
-      g.x = a0.x * x0.x + h.x * x0.y;
-      g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+      vec3 g; g.x = a0.x * x0.x + h.x * x0.y; g.yz = a0.yz * x12.xz + h.yz * x12.yw;
       return 130.0 * dot(m, g);
     }
-
     void main() {
-      // Cyan → indigo palette to match the enterprise theme
       vec3 base = mix(vec3(0.05, 0.75, 0.85), vec3(0.45, 0.35, 0.95), vUv.y);
       float n = snoise(vUv * 5.0 + vec2(time * 0.45, time * 0.7));
-      float light = dot(normalize(vNormal), vec3(0.0, 0.15, 1.0));
-      light = smoothstep(0.0, 1.0, light);
-      vec3 color = (base + n * 0.22) * light;
-      gl_FragColor = vec4(color, 1.0);
+      float light = smoothstep(0.0, 1.0, dot(normalize(vNormal), vec3(0.0, 0.15, 1.0)));
+      gl_FragColor = vec4((base + n * 0.22) * light, 1.0);
     }
   `;
 
   const uniforms = { time: { value: 0 } };
-  const sphere = new THREE.Mesh(
-    new THREE.SphereGeometry(1.25, 96, 96),
-    new THREE.ShaderMaterial({
-      vertexShader,
-      fragmentShader,
-      uniforms,
-      side: THREE.DoubleSide
-    })
-  );
+  const sphere = new THREE.Mesh(new THREE.SphereGeometry(1.25, 96, 96), new THREE.ShaderMaterial({ vertexShader, fragmentShader, uniforms, side: THREE.DoubleSide }));
   heroScene.add(sphere);
 
   const clock = new THREE.Clock();
-
   function heroTick() {
     uniforms.time.value = clock.getElapsedTime();
     sphere.rotation.y += 0.0022;
@@ -598,127 +674,101 @@ async function initThree() {
   }
   heroTick();
   heroCanvas.classList.add("ready");
-
-  // Scroll-linked motion (subtle)
-  let scrollY = 0;
-  window.addEventListener(
-    "scroll",
-    () => {
-      scrollY = window.scrollY;
-    },
-    { passive: true }
-  );
-
-  // Optional subtle parallax via RAF
-  function parallaxLoop() {
-    const progress = Math.min(scrollY / (document.body.scrollHeight * 0.35), 1);
-    sphere.position.y = progress * 0.9;
-    sphere.scale.setScalar(1 + progress * 0.35);
-    requestAnimationFrame(parallaxLoop);
-  }
-  parallaxLoop();
-
-  window.addEventListener(
-    "resize",
-    () => {
-      heroCamera.aspect = innerWidth / innerHeight;
-      heroCamera.updateProjectionMatrix();
-      heroRenderer.setSize(innerWidth, innerHeight);
-      heroRenderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
-    },
-    { passive: true }
-  );
 }
 
 /* =====================================================
-   GSAP + TYPED (loaded dynamically after paint)
+   GSAP ENTRANCE + PARALLAX + TYPED
    ===================================================== */
+function loadScript(src) {
+  return new Promise((resolve, reject) => {
+    if (document.querySelector(`script[src="${src}"]`)) { resolve(); return; }
+    const s = document.createElement("script");
+    s.src = src; s.async = true;
+    s.onload = resolve; s.onerror = reject;
+    document.head.appendChild(s);
+  });
+}
+
 async function initAnimations() {
   // Load Typed.js
   await loadScript("https://cdn.jsdelivr.net/npm/typed.js@2.0.16/dist/typed.umd.js");
 
+  // Load GSAP
+  await loadScript("https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js");
+
+  // Initial typed for cloud track
   if (window.Typed) {
-    new Typed("#typed-roles", {
-      strings: [
-        "Senior Systems Engineer",
-        "Hybrid Infrastructure & Cloud Administration",
-        "Azure & Microsoft 365 Engineer",
-        "Network & Virtualization Specialist"
-      ],
+    typedInstance = new Typed("#typed-roles", {
+      strings: trackContent.cloud.roles,
       typeSpeed: 42,
       backSpeed: 28,
       backDelay: 1400,
       loop: true,
       showCursor: true
     });
+  }
 
-    document.querySelectorAll(".typed-output").forEach((el) => {
-      const strings = JSON.parse(el.dataset.strings);
-      new Typed(el, {
-        strings,
-        typeSpeed: 36,
-        backSpeed: 26,
-        backDelay: 1100,
-        startDelay: 400,
-        loop: true,
-        showCursor: true
-      });
+  // GSAP entrance
+  if (window.gsap && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+    tl.to(".hero-content > *", {
+      opacity: 1,
+      y: 0,
+      duration: 0.7,
+      stagger: 0.08
+    }, 0.15)
+    .to(".hero-side", {
+      opacity: 1,
+      y: 0,
+      duration: 0.85
+    }, 0.25);
+  } else {
+    // Fallback: show immediately
+    document.querySelectorAll(".hero-content > *, .hero-side").forEach((el) => {
+      el.style.opacity = "1";
+      el.style.transform = "none";
     });
   }
 
-  // Load GSAP + ScrollTrigger
-  await loadScript("https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js");
-  await loadScript("https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js");
-
-  if (!window.gsap || !window.ScrollTrigger) return;
-
-  gsap.registerPlugin(ScrollTrigger);
-
-  // Hero entrance
-  gsap.from(".hero-kicker, .hero h1, .hero-lead, .hero-typed, .btn-row, .melbourne-widget, .hero-card", {
-    y: 24,
-    opacity: 0,
-    duration: 0.6,
-    stagger: 0.07,
-    ease: "power2.out",
-    delay: 0.12
-  });
-
-  // Section titles
-  gsap.utils.toArray(".section-title").forEach((el) => {
-    gsap.from(el, {
-      scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none none" },
-      y: 22,
-      opacity: 0,
-      duration: 0.5,
-      ease: "power2.out"
-    });
-  });
-
-  // Cards
-  gsap.utils.toArray(".skill-card, .project-card, .training-item, .cert-card, .strength-card, .community-list li, .exp-item").forEach((el) => {
-    gsap.from(el, {
-      scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none none" },
-      y: 26,
-      opacity: 0,
-      duration: 0.48,
-      ease: "power2.out"
-    });
+  // Strengths typing (lightweight)
+  document.querySelectorAll(".typed-output").forEach((el) => {
+    try {
+      const strings = JSON.parse(el.getAttribute("data-strings") || "[]");
+      if (strings.length && window.Typed) {
+        new Typed(el, {
+          strings,
+          typeSpeed: 36,
+          backSpeed: 22,
+          backDelay: 1800,
+          loop: true,
+          showCursor: false
+        });
+      }
+    } catch (_) {}
   });
 }
 
-function loadScript(src) {
-  return new Promise((resolve, reject) => {
-    if (document.querySelector(`script[src="${src}"]`)) {
-      resolve();
-      return;
-    }
-    const s = document.createElement("script");
-    s.src = src;
-    s.async = true;
-    s.onload = resolve;
-    s.onerror = reject;
-    document.head.appendChild(s);
+/* Subtle 3D mouse-move parallax tilt on hero card */
+function initParallax() {
+  const card = document.getElementById("heroCard");
+  if (!card || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (window.innerWidth < 768) return;
+
+  const maxTilt = 7;
+
+  card.addEventListener("mousemove", (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const midX = rect.width / 2;
+    const midY = rect.height / 2;
+    const rotateY = ((x - midX) / midX) * maxTilt;
+    const rotateX = ((midY - y) / midY) * maxTilt;
+    card.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+  });
+
+  card.addEventListener("mouseleave", () => {
+    card.style.transform = "perspective(900px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
   });
 }
 
@@ -726,7 +776,6 @@ function loadScript(src) {
    BOOT
    ===================================================== */
 document.addEventListener("DOMContentLoaded", () => {
-  // 1. Content (instant)
   buildExperience();
   buildSkills();
   buildStrengths();
@@ -735,23 +784,16 @@ document.addEventListener("DOMContentLoaded", () => {
   buildCerts();
   buildCommunity();
 
-  // 2. Nav + clock + live news
   initNav();
+  initTrackSwitcher();
   startMelbourneClock();
   loadMelbourneWeather();
   loadTechPulse();
+  startTelemetry();
 
-  // 3. Heavy visual work after first paint
-  const schedule = (fn) => {
-    if ("requestIdleCallback" in window) {
-      requestIdleCallback(fn, { timeout: 1600 });
-    } else {
-      setTimeout(fn, 400);
-    }
-  };
-
-  schedule(() => {
-    initThree().catch((e) => console.warn("Three.js init failed:", e));
-    initAnimations().catch((e) => console.warn("Animations init failed:", e));
-  });
+  setTimeout(() => {
+    initThree().catch(() => {});
+    initAnimations().catch(() => {});
+    initParallax();
+  }, 280);
 });

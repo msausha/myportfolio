@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Shakil Ahmed | Senior Systems Engineer</title>
-  <meta name="description" content="Senior Systems Engineer specialising in Hybrid Infrastructure, Azure, Microsoft 365 and Enterprise Networking. Based in Melbourne, VIC." />
+  <title>Shakil Ahmed | Senior Systems Engineer · AI & RAG Specialist</title>
+  <meta name="description" content="Senior Systems Engineer specialising in Hybrid Cloud Infrastructure, Azure, Microsoft 365, Enterprise Networking, AI Engineering, RAG Pipelines and Autonomous Agents. Based in Melbourne, VIC." />
   <meta name="theme-color" content="#060b16" />
+  <meta name="author" content="Shakil Ahmed" />
 
   <!-- Favicon -->
   <link rel="icon" href="favicon.png" type="image/png" />
@@ -68,16 +69,29 @@
     <section id="hero" class="hero">
       <div class="container">
         <div class="hero-grid">
-          <div class="hero-content">
-            <div class="hero-kicker">
+          <div class="hero-content" id="heroContent">
+            <div class="hero-kicker" id="heroKicker">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-              Senior Systems Engineer
+              <span id="kickerText">Senior Systems Engineer</span>
             </div>
             <h1>Shakil <span>Ahmed</span></h1>
-            <p class="hero-lead">
+            <p class="hero-lead" id="heroLead">
               Hybrid enterprise infrastructure specialist driving efficiency through Azure, Microsoft 365, virtualization and large-scale automation.
             </p>
             <div class="hero-typed"><span id="typed-roles"></span></div>
+
+            <!-- Dual-Track Specialty Switcher -->
+            <div class="track-switcher" role="group" aria-label="Specialty focus">
+              <button type="button" class="track-btn active" data-track="cloud" id="trackCloud" aria-pressed="true">
+                <span class="track-icon" aria-hidden="true">☁️</span>
+                <span>Cloud & Systems</span>
+              </button>
+              <button type="button" class="track-btn" data-track="ai" id="trackAI" aria-pressed="false">
+                <span class="track-icon" aria-hidden="true">🤖</span>
+                <span>AI & RAG Engineering</span>
+              </button>
+            </div>
+
             <div class="btn-row">
               <a href="#contact" class="btn-primary">Contact Me</a>
               <a href="#experience" class="btn-ghost">View Experience</a>
@@ -101,9 +115,9 @@
           </div>
 
           <div class="hero-side">
-            <div class="hero-card">
-              <h2>Key Technical Domains</h2>
-              <ul>
+            <div class="hero-card" id="heroCard">
+              <h2 id="heroCardTitle">Key Technical Domains</h2>
+              <ul id="heroCardList">
                 <li>
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
                   Azure, Microsoft 365, Intune, AD Federation
@@ -125,6 +139,32 @@
                   ServiceNow, SCCM, ITIL Process
                 </li>
               </ul>
+
+              <!-- Live Telemetry & AI Agent Status -->
+              <div class="telemetry-panel" id="telemetryPanel" aria-live="polite">
+                <div class="telemetry-title">Live Telemetry</div>
+                <div class="telemetry-item">
+                  <div class="telemetry-label">
+                    <span class="status-dot online" aria-hidden="true"></span>
+                    Azure Hybrid Core
+                  </div>
+                  <div class="telemetry-value">
+                    <span id="azureUptime">99.98%</span>
+                    <span class="telemetry-meta">Uptime · Online</span>
+                  </div>
+                </div>
+                <div class="telemetry-item">
+                  <div class="telemetry-label">
+                    <span class="status-dot active" aria-hidden="true"></span>
+                    AI Foundry Agents
+                  </div>
+                  <div class="telemetry-value">
+                    <span id="aiSyncStatus">Active</span>
+                    <span class="telemetry-meta" id="aiSyncMeta">4 agents · synced 2m ago</span>
+                  </div>
+                </div>
+              </div>
+
               <div class="hero-meta">
                 <div>📍 Melbourne, VIC</div>
                 <div>✉️ <a href="mailto:shakilmsa@yahoo.com">shakilmsa@yahoo.com</a></div>
@@ -139,7 +179,7 @@
     <section id="experience" class="bg-section">
       <div class="container">
         <h2 class="section-title">Professional Experience</h2>
-        <p class="section-sub">Roles with responsibility across hybrid infrastructure, cloud platforms and enterprise networks.</p>
+        <p class="section-sub">Roles with responsibility across hybrid infrastructure, cloud platforms, enterprise networks and emerging AI automation.</p>
         <div id="experienceList"></div>
       </div>
     </section>
@@ -148,7 +188,7 @@
     <section id="skills">
       <div class="container">
         <h2 class="section-title">Skills & Strengths</h2>
-        <p class="section-sub">Technical, professional and personal strengths built across systems, cloud and networking.</p>
+        <p class="section-sub">Technical, professional and personal strengths spanning systems, cloud, networking, AI engineering and automation.</p>
         <div class="skills-grid" id="skillsGrid"></div>
         <div class="strengths-grid" id="strengthsGrid"></div>
       </div>
@@ -158,7 +198,7 @@
     <section id="projects" class="bg-section">
       <div class="container">
         <h2 class="section-title">Projects</h2>
-        <p class="section-sub">Hands-on work across hybrid cloud, identity, automation and internal tooling.</p>
+        <p class="section-sub">Hands-on work across hybrid cloud, multi-agent AI systems, RAG pipelines, email intelligence and autonomous agents.</p>
         <div class="projects-grid" id="projectsGrid"></div>
       </div>
     </section>
@@ -167,7 +207,7 @@
     <section id="trainings">
       <div class="container">
         <h2 class="section-title">Trainings</h2>
-        <p class="section-sub">Formal trainings aligned with infrastructure, cloud, security and operations.</p>
+        <p class="section-sub">Formal trainings aligned with infrastructure, cloud, security, AI and operations.</p>
         <div class="trainings-grid" id="trainingsGrid"></div>
       </div>
     </section>
@@ -194,14 +234,14 @@
     <section id="contact" class="bg-section">
       <div class="container">
         <h2 class="section-title">Contact</h2>
-        <p class="section-sub">Best ways to reach me for roles, projects or collaboration.</p>
+        <p class="section-sub">Best ways to reach me for roles, projects or collaboration across systems, cloud and AI engineering.</p>
         <div class="contact-grid">
           <div class="glass contact-card">
             <h3>Details</h3>
             <ul>
               <li><strong>Email:</strong> <a href="mailto:shakilmsa@yahoo.com">shakilmsa@yahoo.com</a></li>
               <li><strong>Location:</strong> Melbourne, VIC</li>
-              <li><strong>Availability:</strong> Open to senior systems / cloud roles</li>
+              <li><strong>Availability:</strong> Open to senior systems / cloud / AI engineering roles</li>
             </ul>
           </div>
           <div class="glass contact-card">
@@ -215,7 +255,7 @@
     </section>
 
     <footer>
-      <div class="container">© 2025 Shakil Ahmed · Senior Systems Engineer · Melbourne</div>
+      <div class="container">© 2026 Shakil Ahmed · Senior Systems Engineer · AI & RAG Specialist · Melbourne</div>
     </footer>
   </main>
 
