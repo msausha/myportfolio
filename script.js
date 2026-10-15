@@ -687,7 +687,7 @@ async function initThree() {
   // `;
 
 
-  const fragmentShader = `
+const fragmentShader = `
     precision highp float;
     varying vec2 vUv;
     varying vec3 vNormal;
@@ -728,12 +728,18 @@ async function initThree() {
       baseMix = mix(baseMix, colC, cos(vUv.x * 3.14 - tShift) * 0.5 + 0.5);
 
       float n = snoise(vUv * 4.0 + vec2(time * 0.3, time * 0.5));
-      float light = smoothstep(0.0, 1.0, dot(normalize(vNormal), vec3(0.0, 0.2, 1.0));
+      // Added the missing closing parenthesis here:
+      float light = smoothstep(0.0, 1.0, dot(normalize(vNormal), vec3(0.0, 0.2, 1.0)));
       
       vec3 color = (baseMix + n * 0.28) * (light + 0.3);
       gl_FragColor = vec4(color, 1.0);
     }
   `;
+
+
+
+
+
   const uniforms = { time: { value: 0 } };
   const sphere = new THREE.Mesh(new THREE.SphereGeometry(1.25, 96, 96), new THREE.ShaderMaterial({ vertexShader, fragmentShader, uniforms, side: THREE.DoubleSide }));
   heroScene.add(sphere);
