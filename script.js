@@ -718,25 +718,23 @@ const fragmentShader = `
     }
 
     void main() {
-      // Dynamic multi-color gradient mixing based on UV coordinates and time
-      vec3 colA = vec3(0.05, 0.85, 0.95); // Bright Cyan
-      vec3 colB = vec3(0.45, 0.25, 0.95); // Deep Indigo/Purple
-      vec3 colC = vec3(0.95, 0.20, 0.65); // Vibrant Magenta/Pink
+      // Deep, high-contrast enterprise palette (Navy, Cobalt Blue, Deep Teal)
+      // Keeps background safely dark so white/light text remains perfectly legible.
+      vec3 colA = vec3(0.04, 0.15, 0.35); // Deep Navy Blue
+      vec3 colB = vec3(0.08, 0.32, 0.65); // Rich Cobalt Blue
+      vec3 colC = vec3(0.05, 0.35, 0.30); // Deep Teal / Slate
 
-      float tShift = time * 0.2;
+      float tShift = time * 0.15;
       vec3 baseMix = mix(colA, colB, sin(vUv.y * 3.14 + tShift) * 0.5 + 0.5);
       baseMix = mix(baseMix, colC, cos(vUv.x * 3.14 - tShift) * 0.5 + 0.5);
 
-      float n = snoise(vUv * 4.0 + vec2(time * 0.3, time * 0.5));
-      // Added the missing closing parenthesis here:
+      float n = snoise(vUv * 4.0 + vec2(time * 0.25, time * 0.4));
       float light = smoothstep(0.0, 1.0, dot(normalize(vNormal), vec3(0.0, 0.2, 1.0)));
       
-      vec3 color = (baseMix + n * 0.28) * (light + 0.3);
+      vec3 color = (baseMix + n * 0.18) * (light + 0.4);
       gl_FragColor = vec4(color, 1.0);
     }
   `;
-
-
 
 
 
